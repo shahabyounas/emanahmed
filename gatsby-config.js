@@ -1,7 +1,8 @@
 module.exports = {
   siteMetadata: {
     title: `emanahmed`,
-    siteUrl: `https://www.yourdomain.tld`
+    siteUrl: `https://emanahmed.org`
   },
+  pathPrefix: "/",
   plugins: ["gatsby-plugin-sass"]
 };
