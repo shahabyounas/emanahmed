@@ -4,5 +4,9 @@ module.exports = {
     siteUrl: `https://emanahmed.org`
   },
   pathPrefix: "/",
-  plugins: ["gatsby-plugin-sass"]
+  plugins: [
+    {
+    resolve: `gatsby-plugin-sass`,
+  },
+]
 };

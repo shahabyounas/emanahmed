@@ -1,0 +1,41 @@
+.header {
+    
+    &__top-bar {
+        display: flex;
+        align-items: center;
+        background-color: #cd1532;
+        height: 10rem;
+    }
+
+    &__text {
+        display: flex;
+        align-items: center;
+        margin: 0 10rem;
+        color: white;
+    }
+
+    &__name {
+        font-size: 30px;
+        font-weight: bold;
+    }
+
+    &__title {
+        margin: 0 2.5rem;
+        font-size: 15px;
+    }
+
+
+    @media (max-width: 576px) {
+
+        &__text {
+            margin: 0 1.4rem;
+        }
+
+        &__title {
+            margin: 0 2rem;
+            font-size: 13px;
+        }
+    
+    }
+
+}
