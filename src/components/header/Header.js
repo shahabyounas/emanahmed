@@ -9,7 +9,7 @@ function Header(props) {
     return (<div>
                 <div className="header__top-bar">
                     <div className='header__text'>
-                        <img width="100" height="100" src={ image || defaultImage} alt="profile" className="mt-3" />
+                        <img width="100" height="100" src={ image || defaultImage} alt="profile" className="mt-1" />
                         <div className='header__title'>
                             <span className="header__name">{name}</span>
                             <div> {title}</div>

@@ -20,19 +20,25 @@
     }
 
     &__title {
-        margin: 0 2.5rem;
+        display: flex;
+        flex-direction: column;
+        padding: 0 2rem;
         font-size: 15px;
     }
 
 
     @media (max-width: 576px) {
 
+        &__name {
+            font-size: 25px;
+        }
+
         &__text {
-            margin: 0 1.4rem;
+            font-size: 10px;
+            margin: 0 1rem;
         }
 
         &__title {
-            margin: 0 2rem;
             font-size: 13px;
         }
     

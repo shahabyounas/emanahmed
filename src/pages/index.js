@@ -16,7 +16,7 @@ const  pageStyles = {
 const IndexPage = () => {
   return (
     <main style={pageStyles}> 
-      <title>Shahab Younas </title>
+      <title> Eman Ahmed | Phd </title>
       <Header />
       {/* <img
         alt="Eman photo"
