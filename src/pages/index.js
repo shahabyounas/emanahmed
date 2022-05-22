@@ -1,5 +1,7 @@
 import * as React from "react"
-import Header from "../components/header/Header"
+import Home from "../components/home"
+import Layout from "../components/Layout"
+import UserDetail from "../components/user-detail"
 
 // styles
 const  pageStyles = {
@@ -17,11 +19,10 @@ const IndexPage = () => {
   return (
     <main style={pageStyles}> 
       <title> Eman Ahmed | Phd </title>
-      <Header />
-      {/* <img
-        alt="Eman photo"
-        src=""
-      /> */}
+      <Layout>
+        <UserDetail />
+        <Home />
+      </Layout>
     </main>
   )
 }
