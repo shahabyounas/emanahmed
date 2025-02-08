@@ -29,7 +29,23 @@ function Home() {
     const [activeTab, setActiveTab] = useState(tabs[0]);
 
     function UserBio(){
-        return (<div className="home__bio"> {appLocale['user-bio']} </div>)
+        return <>
+            <div className="home__bio">
+            <h4 style={{ fontWeight: 'bold' }}> PhD Student Biomedical Engineering  </h4>
+            Eman joined Rutgers Biomedical Engineering Department as a PhD student in 2022. She has a bachelor’s 
+            in biomedical engineering from Rutgersand also a minor in mathematics. She conducted research on 
+            nanoparticles characteristics in vitro and in silico. As a PhD student, she is interested in leveraging
+             machine learning and nanobiomaterials for enhancing drug delivery.
+            </div>
+
+            <div className="home__bio">
+            <h4 style={{ fontWeight: 'bold' }}> Bachelor’s Biomedical Engineering   </h4>
+                Eman holds an undergraduate Biomedical Engineering degree from Rutgers School of Engineering and a
+                minor in Mathematics. Nanotechnology is her key interest. Eman has experience creating computer simulations 
+                for nanoparticles using Dissipative Particle Dynamics. Also, she conducted research to investigate the use 
+                of gold nanoparticles in Hepatitis C diagnosis.
+            </div>
+        </>
     }
 
 

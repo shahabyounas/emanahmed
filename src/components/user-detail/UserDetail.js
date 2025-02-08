@@ -17,6 +17,7 @@ function UserDetail(props) {
                             <div> {school}</div>
                         </div>
                     </div>
+                    <div className='user-detail__text'> <a href='#' style={{ color: 'white', fontWeight: 'bold', textDecoration: 'none' }}> Blog </a>  </div>
                 </div>
     </div> );
 }
