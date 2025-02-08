@@ -34,7 +34,7 @@ function Home() {
             <h4 style={{ fontWeight: 'bold' }}> PhD Student Biomedical Engineering  </h4>
             Eman joined Rutgers Biomedical Engineering Department as a PhD student in 2022. She has a bachelor’s 
             in biomedical engineering from Rutgersand also a minor in mathematics. She conducted research on 
-            nanoparticles characteristics in vitro and in silico. As a PhD student, she is interested in leveraging
+            <strong>nanoparticles characteristics in vitro and in silico </strong>. As a PhD student, she is interested in leveraging
              machine learning and nanobiomaterials for enhancing drug delivery.
             </div>
 
