@@ -15,6 +15,7 @@ function UserDetail(props) {
                             <div> {title}</div>
                             <div> {discipline}</div>
                             <div> {school}</div>
+                            <div> <strong> <em> <a style={{ textDecoration: 'none', color: 'white' }} href="mailto:eman.ahmed@rutgers.edu">Email Contact</a> </em> </strong> </div>
                         </div>
                     </div>
                     <div className='user-detail__text'> <a href='#' style={{ color: 'white', fontWeight: 'bold', textDecoration: 'none' }}> Blog </a>  </div>
