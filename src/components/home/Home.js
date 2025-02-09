@@ -37,6 +37,7 @@ function Home() {
         return tabs[0].to
     });
 
+    console.log(window.location.href)
 
 
     return (<div className='home home-content'>
