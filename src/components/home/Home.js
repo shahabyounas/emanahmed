@@ -40,7 +40,6 @@ function Home() {
 
 
     return (<div className='home home-content'>
-               {activeTab}
                 <ul className='nav nav-tabs nav-justified home__tabs'>
                         {tabs.map((tab) => (
                             <li className='nav-item home__tab-item'>
