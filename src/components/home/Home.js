@@ -28,11 +28,19 @@ function Home() {
         }]
 
 
-    const tab = window.location.href.split('#')[1]
-    const [activeTab, setActiveTab] = useState(`#${tab}`);
+
+    const [activeTab, setActiveTab] = useState(()=> {
+        if(typeof window !== undefined){
+            let selectedTab = window.location.href.split('#')[1]
+            return selectedTab ?  `#${selectedTab}` : tabs[0].to
+        }
+        return tabs[0].to
+    });
 
 
-    return (<div className='home home-content'> 
+
+    return (<div className='home home-content'>
+               {activeTab}
                 <ul className='nav nav-tabs nav-justified home__tabs'>
                         {tabs.map((tab) => (
                             <li className='nav-item home__tab-item'>
@@ -46,7 +54,7 @@ function Home() {
                 </ul>
 
                 <div>
-                    {tabs.filter((tab) => tab.to == activeTab)[0].component}
+                    {tabs.filter((tab) => tab.to === activeTab)[0].component}
                 </div>
          </div>)
 }
@@ -106,7 +114,7 @@ function Publications(){
         </div>
         <p className='mt-4'>
         <strong> Publication Link </strong> 
-        <a href='https://pubmed.ncbi.nlm.nih.gov/39135398/' target='_blank'> https://pubmed.ncbi.nlm.nih.gov/39135398/ </a>
+        <a href='https://pubmed.ncbi.nlm.nih.gov/39135398/' rel='noreferrer' target='_blank'> https://pubmed.ncbi.nlm.nih.gov/39135398/ </a>
         </p>
        </div>
     </>
