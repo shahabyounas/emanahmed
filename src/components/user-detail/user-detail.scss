@@ -5,27 +5,29 @@
         align-items: center;
         justify-content: space-between;
         align-items: flex-start;
+        flex-wrap: wrap;
         background-color: #cd1532;
         padding: 2em;
     }
 
     &__text {
         display: flex;
-        align-items: center;
-        // margin: 0 6rem;
+        justify-content: center;
+        flex-wrap: wrap;
+        align-items: flex-start;
         color: white;
     }
 
     &__name {
-        font-size: 30px;
+        font-size: 25px;
         font-weight: bold;
     }
 
     &__title {
         display: flex;
         flex-direction: column;
-        padding: 0 2rem;
-        font-size: 15px;
+
+        padding: 0 1rem;
     }
 
 
@@ -44,6 +46,25 @@
             font-size: 13px;
         }
 
+    }
+
+}
+
+.email {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+}
+
+.email span {
+    margin-top: .1em;
+}
+
+@media (width < 30em) {
+    .user-detail {
+        &__top-bar {
+            padding: 1em;
+        }
     }
 
 }
