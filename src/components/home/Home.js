@@ -28,7 +28,8 @@ function Home() {
         }]
 
 
-    const [activeTab, setActiveTab] = useState(tabs[0]);
+    const tab = window.location.href.split('#')[1]
+    const [activeTab, setActiveTab] = useState(`#${tab}`);
 
 
     return (<div className='home home-content'> 
@@ -36,16 +37,16 @@ function Home() {
                         {tabs.map((tab) => (
                             <li className='nav-item home__tab-item'>
                                 <Link 
-                                    className={`nav-link ${ activeTab.to === tab.to  && 'home__tab-item--active'}`}
+                                    className={`nav-link ${ activeTab === tab.to  && 'home__tab-item--active'}`}
                                     aria-current="page" 
                                     to={tab.to} 
-                                    onClick={() => setActiveTab(tab)}>{tab.name}</Link>
+                                    onClick={() => setActiveTab(tab.to)}>{tab.name}</Link>
                             </li>
                         ))}
                 </ul>
 
                 <div>
-                    {activeTab['component']}
+                    {tabs.filter((tab) => tab.to == activeTab)[0].component}
                 </div>
          </div>)
 }
