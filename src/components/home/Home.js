@@ -37,8 +37,6 @@ function Home() {
         return tabs[0].to
     });
 
-    console.log(window.location.href)
-
 
     return (<div className='home home-content'>
                 <ul className='nav nav-tabs nav-justified home__tabs'>
