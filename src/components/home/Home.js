@@ -30,7 +30,7 @@ function Home() {
 
 
     const [activeTab, setActiveTab] = useState(()=> {
-        if(typeof window !== undefined){
+        if(typeof window !== 'undefined'){
             let selectedTab = window.location.href.split('#')[1]
             return selectedTab ?  `#${selectedTab}` : tabs[0].to
         }
