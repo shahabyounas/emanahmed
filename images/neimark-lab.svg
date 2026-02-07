@@ -1,0 +1,108 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" width="600" height="400">
+  <defs>
+    <linearGradient id="labBg2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0c1445"/>
+      <stop offset="100%" style="stop-color:#1a1a2e"/>
+    </linearGradient>
+  </defs>
+  <rect width="600" height="400" fill="url(#labBg2)"/>
+  
+  <!-- Lipid Membrane Bilayer -->
+  <g transform="translate(50, 150)">
+    <!-- Upper leaflet -->
+    <g>
+      <circle cx="40" cy="0" r="12" fill="#3b82f6"/>
+      <line x1="40" y1="12" x2="40" y2="50" stroke="#60a5fa" stroke-width="3"/>
+      <line x1="35" y1="12" x2="30" y2="50" stroke="#60a5fa" stroke-width="2"/>
+      
+      <circle cx="80" cy="0" r="12" fill="#3b82f6"/>
+      <line x1="80" y1="12" x2="80" y2="50" stroke="#60a5fa" stroke-width="3"/>
+      <line x1="85" y1="12" x2="90" y2="50" stroke="#60a5fa" stroke-width="2"/>
+      
+      <circle cx="120" cy="0" r="12" fill="#3b82f6"/>
+      <line x1="120" y1="12" x2="120" y2="50" stroke="#60a5fa" stroke-width="3"/>
+      <line x1="115" y1="12" x2="110" y2="50" stroke="#60a5fa" stroke-width="2"/>
+      
+      <circle cx="160" cy="0" r="12" fill="#cd1532"/>
+      <line x1="160" y1="12" x2="160" y2="50" stroke="#f87171" stroke-width="3"/>
+      <line x1="165" y1="12" x2="170" y2="50" stroke="#f87171" stroke-width="2"/>
+      
+      <circle cx="200" cy="0" r="12" fill="#3b82f6"/>
+      <line x1="200" y1="12" x2="200" y2="50" stroke="#60a5fa" stroke-width="3"/>
+      <line x1="195" y1="12" x2="190" y2="50" stroke="#60a5fa" stroke-width="2"/>
+    </g>
+    
+    <!-- Lower leaflet -->
+    <g transform="translate(0, 100)">
+      <circle cx="40" cy="50" r="12" fill="#10b981"/>
+      <line x1="40" y1="38" x2="40" y2="0" stroke="#34d399" stroke-width="3"/>
+      <line x1="35" y1="38" x2="30" y2="0" stroke="#34d399" stroke-width="2"/>
+      
+      <circle cx="80" cy="50" r="12" fill="#10b981"/>
+      <line x1="80" y1="38" x2="80" y2="0" stroke="#34d399" stroke-width="3"/>
+      <line x1="85" y1="38" x2="90" y2="0" stroke="#34d399" stroke-width="2"/>
+      
+      <circle cx="120" cy="50" r="12" fill="#10b981"/>
+      <line x1="120" y1="38" x2="120" y2="0" stroke="#34d399" stroke-width="3"/>
+      <line x1="115" y1="38" x2="110" y2="0" stroke="#34d399" stroke-width="2"/>
+      
+      <circle cx="160" cy="50" r="12" fill="#f59e0b"/>
+      <line x1="160" y1="38" x2="160" y2="0" stroke="#fbbf24" stroke-width="3"/>
+      <line x1="165" y1="38" x2="170" y2="0" stroke="#fbbf24" stroke-width="2"/>
+      
+      <circle cx="200" cy="50" r="12" fill="#10b981"/>
+      <line x1="200" y1="38" x2="200" y2="0" stroke="#34d399" stroke-width="3"/>
+      <line x1="195" y1="38" x2="190" y2="0" stroke="#34d399" stroke-width="2"/>
+    </g>
+  </g>
+  
+  <!-- Tension Arrow -->
+  <g transform="translate(300, 180)">
+    <line x1="0" y1="40" x2="80" y2="40" stroke="#ef4444" stroke-width="4" marker-end="url(#arrowhead)"/>
+    <line x1="200" y1="40" x2="120" y2="40" stroke="#ef4444" stroke-width="4" marker-end="url(#arrowhead2)"/>
+    <text x="100" y="80" font-family="Inter, sans-serif" font-size="14" fill="#ef4444" text-anchor="middle">Tension</text>
+  </g>
+  
+  <!-- Arrowheads -->
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#ef4444"/>
+    </marker>
+    <marker id="arrowhead2" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#ef4444"/>
+    </marker>
+  </defs>
+  
+  <!-- Computational Grid -->
+  <g transform="translate(380, 120)">
+    <rect x="0" y="0" width="180" height="160" fill="#1e293b" rx="8" stroke="#334155" stroke-width="2"/>
+    <text x="90" y="25" font-family="Inter, sans-serif" font-size="12" fill="#94a3b8" text-anchor="middle">Molecular Simulation</text>
+    
+    <!-- Grid pattern -->
+    <g stroke="#475569" stroke-width="1" opacity="0.5">
+      <line x1="20" y1="40" x2="160" y2="40"/>
+      <line x1="20" y1="70" x2="160" y2="70"/>
+      <line x1="20" y1="100" x2="160" y2="100"/>
+      <line x1="20" y1="130" x2="160" y2="130"/>
+      <line x1="40" y1="35" x2="40" y2="145"/>
+      <line x1="80" y1="35" x2="80" y2="145"/>
+      <line x1="120" y1="35" x2="120" y2="145"/>
+    </g>
+    
+    <!-- Data points -->
+    <circle cx="60" cy="55" r="4" fill="#cd1532"/>
+    <circle cx="100" cy="85" r="4" fill="#3b82f6"/>
+    <circle cx="140" cy="115" r="4" fill="#10b981"/>
+    <circle cx="60" cy="115" r="4" fill="#f59e0b"/>
+    <circle cx="100" cy="55" r="4" fill="#8b5cf6"/>
+  </g>
+  
+  <!-- Rupture visualization -->
+  <g transform="translate(160, 200)" opacity="0.6">
+    <path d="M0,0 L10,-15 L20,5 L30,-10 L40,0" stroke="#ef4444" stroke-width="2" fill="none"/>
+  </g>
+  
+  <!-- Lab Name -->
+  <text x="300" y="50" font-family="Playfair Display, serif" font-size="32" fill="#ffffff" text-anchor="middle" font-weight="700">Neimark Laboratory</text>
+  <text x="300" y="380" font-family="Inter, sans-serif" font-size="14" fill="#64748b" text-anchor="middle">Computational Nanomaterials • Rutgers Chemical Engineering</text>
+</svg>

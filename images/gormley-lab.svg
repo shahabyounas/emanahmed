@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" width="600" height="400">
+  <defs>
+    <linearGradient id="labBg1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1e293b"/>
+      <stop offset="100%" style="stop-color:#0f172a"/>
+    </linearGradient>
+  </defs>
+  <rect width="600" height="400" fill="url(#labBg1)"/>
+  
+  <!-- Polymer chains background -->
+  <g opacity="0.15">
+    <path d="M0,100 Q50,50 100,100 Q150,150 200,100 Q250,50 300,100 Q350,150 400,100 Q450,50 500,100 Q550,150 600,100" stroke="#cd1532" stroke-width="4" fill="none"/>
+    <path d="M0,200 Q50,150 100,200 Q150,250 200,200 Q250,150 300,200 Q350,250 400,200 Q450,150 500,200 Q550,250 600,200" stroke="#3b82f6" stroke-width="4" fill="none"/>
+    <path d="M0,300 Q50,250 100,300 Q150,350 200,300 Q250,250 300,300 Q350,350 400,300 Q450,250 500,300 Q550,350 600,300" stroke="#10b981" stroke-width="4" fill="none"/>
+  </g>
+  
+  <!-- Lab Equipment Silhouettes -->
+  <!-- Automated Platform -->
+  <g transform="translate(80, 120)">
+    <rect x="0" y="100" width="150" height="80" fill="#334155" rx="5"/>
+    <rect x="10" y="110" width="130" height="60" fill="#1e293b" rx="3"/>
+    <!-- Well plate -->
+    <g transform="translate(20, 120)">
+      <rect x="0" y="0" width="110" height="40" fill="#475569" rx="2"/>
+      <circle cx="15" cy="12" r="5" fill="#cd1532" opacity="0.7"/>
+      <circle cx="35" cy="12" r="5" fill="#3b82f6" opacity="0.7"/>
+      <circle cx="55" cy="12" r="5" fill="#10b981" opacity="0.7"/>
+      <circle cx="75" cy="12" r="5" fill="#f59e0b" opacity="0.7"/>
+      <circle cx="95" cy="12" r="5" fill="#8b5cf6" opacity="0.7"/>
+      <circle cx="15" cy="28" r="5" fill="#3b82f6" opacity="0.7"/>
+      <circle cx="35" cy="28" r="5" fill="#cd1532" opacity="0.7"/>
+      <circle cx="55" cy="28" r="5" fill="#f59e0b" opacity="0.7"/>
+      <circle cx="75" cy="28" r="5" fill="#10b981" opacity="0.7"/>
+      <circle cx="95" cy="28" r="5" fill="#cd1532" opacity="0.7"/>
+    </g>
+    <!-- Robot arm -->
+    <rect x="130" y="60" width="10" height="50" fill="#64748b"/>
+    <rect x="100" y="55" width="50" height="10" fill="#64748b"/>
+  </g>
+  
+  <!-- Protein/Enzyme Symbol -->
+  <g transform="translate(350, 100)">
+    <ellipse cx="80" cy="80" rx="70" ry="50" fill="none" stroke="#cd1532" stroke-width="3" stroke-dasharray="8,4"/>
+    <ellipse cx="80" cy="80" rx="50" ry="35" fill="none" stroke="#f59e0b" stroke-width="2"/>
+    <text x="80" y="88" font-family="Inter, sans-serif" font-size="28" fill="#ffffff" text-anchor="middle" font-weight="bold">E</text>
+    <text x="80" y="155" font-family="Inter, sans-serif" font-size="12" fill="#94a3b8" text-anchor="middle">Enzyme</text>
+  </g>
+  
+  <!-- Polymer wrapping enzyme -->
+  <path d="M300,80 Q330,60 360,80 Q390,100 420,80 Q450,60 480,80" stroke="#3b82f6" stroke-width="3" fill="none"/>
+  <path d="M300,180 Q330,200 360,180 Q390,160 420,180 Q450,200 480,180" stroke="#10b981" stroke-width="3" fill="none"/>
+  
+  <!-- Data/Results -->
+  <g transform="translate(400, 220)">
+    <rect x="0" y="0" width="160" height="120" fill="#1e293b" rx="8" stroke="#334155" stroke-width="2"/>
+    <text x="80" y="25" font-family="Inter, sans-serif" font-size="11" fill="#94a3b8" text-anchor="middle">Stability Results</text>
+    <rect x="20" y="40" width="15" height="60" fill="#cd1532"/>
+    <rect x="45" y="55" width="15" height="45" fill="#3b82f6"/>
+    <rect x="70" y="35" width="15" height="65" fill="#10b981"/>
+    <rect x="95" y="50" width="15" height="50" fill="#f59e0b"/>
+    <rect x="120" y="30" width="15" height="70" fill="#8b5cf6"/>
+  </g>
+  
+  <!-- Lab Name -->
+  <text x="300" y="50" font-family="Playfair Display, serif" font-size="32" fill="#ffffff" text-anchor="middle" font-weight="700">Gormley Laboratory</text>
+  <text x="300" y="380" font-family="Inter, sans-serif" font-size="14" fill="#64748b" text-anchor="middle">High-Throughput Polymer Science • Rutgers BME</text>
+</svg>
