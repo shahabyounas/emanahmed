@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
+    <defs>
+        <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#f3f4f6;stop-opacity:1" />
+            <stop offset="100%" style="stop-color:#e5e7eb;stop-opacity:1" />
+        </linearGradient>
+    </defs>
+    <!-- Background -->
+    <rect width="400" height="400" fill="url(#bgGrad)" />
+    <!-- Circle for head -->
+    <circle cx="200" cy="140" r="70" fill="#9ca3af" />
+    <!-- Body/shoulders -->
+    <ellipse cx="200" cy="340" rx="120" ry="100" fill="#9ca3af" />
+    <!-- Text -->
+    <text x="200" y="395" font-family="Inter, sans-serif" font-size="14" fill="#6b7280" text-anchor="middle">Photo
+        Coming Soon</text>
+</svg>

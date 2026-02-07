@@ -1,0 +1,24 @@
+# Robots.txt for emanahmed.org
+# Academic portfolio - allow all crawlers
+
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://emanahmed.org/sitemap.xml
+
+# Crawl delay (optional, be respectful to the server)
+Crawl-delay: 1
+
+# Allow specific bots for academic indexing
+User-agent: Googlebot
+Allow: /
+
+User-agent: Googlebot-Scholar
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Slurp
+Allow: /
