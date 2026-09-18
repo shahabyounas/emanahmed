@@ -66,8 +66,6 @@ I = {
  "robot":'<rect x="4" y="8" width="16" height="12" rx="2"/><path d="M12 8V4M9 4h6"/><circle cx="9" cy="14" r="1.2" fill="currentColor"/><circle cx="15" cy="14" r="1.2" fill="currentColor"/><path d="M2 12v4M22 12v4"/>',
  "pin":'<path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="3"/>',
  "code":'<path d="m8 6-6 6 6 6M16 6l6 6-6 6"/>',
- "pause":'<rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/>',
- "play":'<path d="M7 4.5v15l13-7.5z"/>',
 }
 def ico(n, cls=""):
     c = f' class="{cls}"' if cls else ""
@@ -560,26 +558,14 @@ def build_home():
   </div>
 </section>
 
-<section class="sec sec--reel">
-  <video class="reel__v" id="reel" playsinline muted loop autoplay preload="metadata"
-         poster="media/automation-poster.jpg" width="1280" height="720"
-         aria-hidden="true" tabindex="-1">
-    <source src="media/automation-loop.mp4" type="video/mp4">
-  </video>
-  <div class="reel__scrim" aria-hidden="true"></div>
-  <button class="reel__btn" type="button" id="reel-toggle" aria-controls="reel"
-          aria-label="Pause the background animation" data-playing="true">{ico("pause")}{ico("play")}</button>
+<section class="sec sec--sunk">
   <div class="wrap">
-    <div class="reel__panel">
-      <div class="sec__head sec__head--split">
-        <h2>What I work on</h2>
-        <p>Three connected problems: making enzymes survive outside water, generating enough polymer data
-        to learn from, and building analysis that keeps pace with the synthesis.</p>
-      </div>
-      <div class="areas">{areas}</div>
-      <p class="reel__prov">Background: stock footage of industrial automation, for illustration. None
-      of it is the Rutgers platform, and no result on this site came from any of it.</p>
+    <div class="sec__head sec__head--split">
+      <h2>What I work on</h2>
+      <p>Three connected problems: making enzymes survive outside water, generating enough polymer data
+      to learn from, and building analysis that keeps pace with the synthesis.</p>
     </div>
+    <div class="areas">{areas}</div>
   </div>
 </section>
 

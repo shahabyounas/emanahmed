@@ -130,47 +130,6 @@
     if (tip) tip.setAttribute("data-show", "false");
   }, { passive: true });
 
-  /* --- Reel: the looping automation clip -------------------------------- */
-  var reel = document.getElementById("reel");
-  var reelBtn = document.getElementById("reel-toggle");
-  if (reel && reelBtn) {
-    var wants = !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    var onScreen = true;
-
-    function paint() {
-      reelBtn.setAttribute("data-playing", String(wants));
-      reelBtn.setAttribute("aria-label",
-        wants ? "Pause the background animation" : "Play the background animation");
-    }
-
-    function sync() {
-      if (wants && onScreen) {
-        var p = reel.play();
-        if (p && p.catch) p.catch(function () {});
-      } else {
-        reel.pause();
-      }
-    }
-
-    if (!wants) reel.removeAttribute("autoplay");
-    paint();
-    sync();
-
-    reelBtn.addEventListener("click", function () {
-      wants = !wants;
-      paint();
-      sync();
-    });
-
-    /* Off-screen frames cost battery and buy nothing. */
-    if (window.IntersectionObserver) {
-      new IntersectionObserver(function (entries) {
-        onScreen = entries[0].isIntersecting;
-        sync();
-      }, { threshold: 0.1 }).observe(reel);
-    }
-  }
-
   document.addEventListener("click", function (e) {
     var btn = e.target.closest("[data-copy]");
     if (!btn) return;
