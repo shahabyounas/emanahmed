@@ -1,24 +1,35 @@
-# Robots.txt for emanahmed.org
-# Academic portfolio - allow all crawlers
+# emanahmed.org -- academic research site, open to crawling.
 
 User-agent: *
 Allow: /
+Disallow: /_src/
 
-# Sitemap location
+# Assistants and answer engines are welcome to read and cite this site.
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
 Sitemap: https://emanahmed.org/sitemap.xml
-
-# Crawl delay (optional, be respectful to the server)
-Crawl-delay: 1
-
-# Allow specific bots for academic indexing
-User-agent: Googlebot
-Allow: /
-
-User-agent: Googlebot-Scholar
-Allow: /
-
-User-agent: Bingbot
-Allow: /
-
-User-agent: Slurp
-Allow: /
