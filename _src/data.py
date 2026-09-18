@@ -3,7 +3,7 @@
 Single source of truth for emanahmed.org.
 
 Every bibliographic field here was taken from the publisher of record
-(ACS, Liebert, Cell Press) or PubMed Central. Do not edit generated HTML —
+(ACS, Liebert, Cell Press) or PubMed Central. Do not edit generated HTML:
 edit this file and re-run `python3 _src/build.py`.
 """
 
@@ -26,7 +26,16 @@ PROFILE = {
     "email": "eman.ahmed@rutgers.edu",
     "scholar": "https://scholar.google.com/citations?user=2X7j71EAAAAJ&hl=en",
     "linkedin": "https://www.linkedin.com/in/eman-ahmed-14724613b/",
-    # Scholar metrics — update when you refresh them, and move the date with them.
+    # Optional identifiers. Leave "" and nothing renders: no dead links, no
+    # invented IDs. Fill one in and it flows automatically into the Person
+    # schema (sameAs / identifier), the footer, the contact page and the CV.
+    # See _src/authority-kit.md for why each one is worth claiming.
+    "orcid": "",           # bare ID, e.g. "0000-0002-1825-0097"
+    "github": "",          # full URL
+    "researchgate": "",    # full URL
+    "openalex": "",        # full URL, e.g. https://openalex.org/A5012345678
+    "bluesky": "",         # full URL
+    # Scholar metrics. Update when you refresh them, and move the date with them.
     "metrics": {"papers": "3", "citations": "43", "hindex": "3", "asof": "September 2026"},
     "photo": "images/eman-us.jpeg",
     "advisor": "Adam J. Gormley",
@@ -54,7 +63,7 @@ EXPERTISE = [
 ]
 
 # --- Publications ----------------------------------------------------------
-# role: "first" | "co"  — status: "published" | "inprep"
+# role: "first" | "co"  ·  status: "published" | "inprep"
 
 PUBLICATIONS = [
     {
@@ -100,7 +109,7 @@ PUBLICATIONS = [
             "and development of optimal biomaterial designs."
         ),
         "plain": (
-            "Biomaterials rarely fail or succeed for one obvious reason — performance usually comes from a "
+            "Biomaterials rarely fail or succeed for one obvious reason. Performance usually comes from a "
             "combination of small structural details interacting at once. Testing those combinations one experiment "
             "at a time does not scale. This review sets out how high-throughput experimentation paired with machine "
             "learning changes the search: run many conditions in parallel, keep every data point including the "
@@ -108,7 +117,7 @@ PUBLICATIONS = [
             "sampled points."
         ),
         "why": [
-            "Covers five application areas in one place — tissue engineering, gene delivery, drug delivery, protein stabilization and antifouling materials — rather than a single material class.",
+            "Covers five application areas in one place (tissue engineering, gene delivery, drug delivery, protein stabilization and antifouling materials) rather than a single material class.",
             "Treats data mining as a first-class method alongside experiment, showing where published data can substitute for benchwork.",
             "Written for experimentalists adopting ML, not for ML specialists: the framing is which model to reach for and what data it needs.",
         ],
@@ -156,7 +165,7 @@ PUBLICATIONS = [
         ),
         "plain": (
             "ATRP is one of the workhorse reactions for making polymers with controlled length and composition, but "
-            "it has historically needed inert, oxygen-free conditions — which rules out running it in an open well "
+            "it has historically needed inert, oxygen-free conditions, which rules out running it in an open well "
             "plate on a robot. Oxygen-tolerant chemistry removes that constraint. This paper puts photo-ATRP onto an "
             "automated liquid-handling platform and uses it to screen reaction components at a scale that is "
             "impractical by hand, including for methyl methacrylate, a monomer that propagates slowly enough to be "
@@ -217,7 +226,7 @@ PUBLICATIONS = [
             "polymer research fields."
         ),
         "plain": (
-            "SAXS tells you the size and shape of something in solution, but getting there involves judgement calls — "
+            "SAXS tells you the size and shape of something in solution, but getting there involves judgement calls: "
             "where to set the Guinier range, whether a P(r) fit is trustworthy, what maximum dimension to believe. Those "
             "calls are slow and they vary between analysts, which is a problem once you are producing hundreds of "
             "profiles. SAXS Assistant automates the pipeline, trains a model on 1,940 experimental profiles from the "
@@ -227,7 +236,7 @@ PUBLICATIONS = [
         "why": [
             "Trained only on experimental SASBDB data, so the model reproduces how practitioners actually analyse profiles rather than idealised simulations.",
             "Reports test-set R² = 0.90 and mean absolute error of 11.7 Å for maximum particle dimension.",
-            "Flags low-confidence results rather than returning them silently — the quality control is part of the tool, not a separate manual step.",
+            "Flags low-confidence results rather than returning them silently, so the quality control is part of the tool, not a separate manual step.",
             "Released open source on PyPI and built on BioXTAS RAW, so it slots into existing SAXS workflows.",
         ],
         "tags": ["SAXS", "Machine learning", "Open source", "Nanoparticles"],
@@ -257,12 +266,13 @@ PUBLISHED = [p for p in PUBLICATIONS if p["status"] == "published"]
 AREAS = [
     {
         "id": "protein-stabilization",
+        "deep": "polymer-stabilized-enzymes",
         "icon": "flask",
         "title": "Polymer-stabilized enzymes in organic solvents",
         "lede": "Doctoral project, Gormley Lab, 2022-2026",
         "body": [
             "Enzymes are extraordinary catalysts in water and frequently useless outside it. Move one into a "
-            "water-miscible organic solvent — which is often where the interesting synthetic chemistry happens — "
+            "water-miscible organic solvent, which is often where the interesting synthetic chemistry happens, "
             "and it tends to unfold, aggregate and drop out of solution.",
             "Random copolymers can act as synthetic chaperones, wrapping a protein in a shell whose chemistry can be "
             "tuned monomer by monomer. The difficulty is that the design space is enormous and the structure-function "
@@ -274,12 +284,13 @@ AREAS = [
     },
     {
         "id": "machine-learning",
+        "deep": "machine-learning-biomaterials",
         "icon": "model",
         "title": "Machine learning for biomaterial structure-function mapping",
         "lede": "First-author review, Tissue Engineering Part A, 2024",
         "body": [
             "High-throughput experiments produce the kind of data that models need: many conditions, consistent "
-            "measurement, and — importantly — retained failures. The question is what to do with it.",
+            "measurement, and, importantly, retained failures. The question is what to do with it.",
             "My review in Tissue Engineering Part A surveys how machine learning is being used to identify the "
             "physicochemical cues that govern biomaterial performance, across tissue engineering, gene delivery, drug "
             "delivery, protein stabilization and antifouling surfaces, along with the data-mining approaches that let "
@@ -289,14 +300,15 @@ AREAS = [
     },
     {
         "id": "automation",
+        "deep": "automated-photo-atrp",
         "icon": "robot",
         "title": "Automated polymer synthesis and analysis",
         "lede": "photo-ATRP platform and SAXS Assistant",
         "body": [
             "Oxygen-tolerant reversible-deactivation radical polymerization made it possible to run controlled polymer "
             "chemistry in open labware. That is what puts it within reach of a liquid handler, and it is the premise "
-            "behind our automated photo-ATRP platform, which screens ligands and initiators for monomers — methyl "
-            "methacrylate among them — that are slow enough to be painful to optimise by hand.",
+            "behind our automated photo-ATRP platform, which screens ligands and initiators for monomers, methyl "
+            "methacrylate among them, that are slow enough to be painful to optimise by hand.",
             "Synthesis throughput is only useful if characterisation keeps up. SAXS Assistant addresses the other end "
             "of the pipeline: it automates small-angle X-ray scattering analysis, estimates maximum particle dimension "
             "with a model trained on 1,940 experimental profiles, and refuses to report results it cannot stand behind.",

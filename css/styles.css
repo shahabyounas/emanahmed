@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Eman Ahmed — emanahmed.org
+   Eman Ahmed · emanahmed.org
    Design system: "instrument panel"
    Grounded in the vernacular of high-throughput polymer science:
    the 96-well plate, the scattering curve, the readout.
@@ -8,7 +8,7 @@
 /* --- Tokens --------------------------------------------------------------- */
 
 :root {
-  /* Light — "bench paper" */
+  /* Light: "bench paper" */
   --bg:            #F6F8FB;
   --bg-sunk:       #EDF1F7;
   --surface:       #FFFFFF;
@@ -167,13 +167,19 @@ a:hover { text-decoration-color: currentColor; }
 }
 .skip:focus { top: var(--s4); }
 
-/* Data text: monospace is reserved for values a reader may copy or compare —
+/* Data text: monospace is reserved for values a reader may copy or compare,
    q-ranges, DOIs, counts, dates. Never for decorative labels. */
 .data {
   font-family: var(--mono);
   font-size: .9em;
   font-variant-ligatures: none;
   letter-spacing: -0.01em;
+  /* A DOI is one unbreakable token ~290px wide: no spaces, and a browser will
+     not break at `/` or `.` on its own. `anywhere` rather than `break-word`
+     because only `anywhere` lowers the element's min-content width, which is
+     what stops a token like this from setting a floor for the layout around
+     it. */
+  overflow-wrap: anywhere;
 }
 
 /* --- Header rail ---------------------------------------------------------- */
@@ -299,7 +305,7 @@ a:hover { text-decoration-color: currentColor; }
 
 /* --- Hero ----------------------------------------------------------------- */
 
-.hero { padding-block: var(--s9) var(--s10); overflow: hidden; }
+.hero { padding-block: var(--s6) var(--s9); overflow: hidden; }
 
 .hero__grid {
   display: grid; gap: var(--s8);
@@ -310,7 +316,7 @@ a:hover { text-decoration-color: currentColor; }
   .hero__grid { grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr); gap: var(--s9); }
 }
 
-.hero h1 { margin-bottom: var(--s5); }
+.hero h1 { margin-bottom: var(--s4); }
 
 .hero__name {
   display: block;
@@ -323,24 +329,24 @@ a:hover { text-decoration-color: currentColor; }
 
 .hero__line {
   display: block;
-  font-size: clamp(2.125rem, 5.4vw, var(--t-5xl));
-  line-height: 1.05;
+  font-size: clamp(2rem, 4.6vw, 3.25rem);
+  line-height: 1.04;
   letter-spacing: -0.033em;
   text-wrap: balance;
 }
 
 .hero__lede {
-  font-size: var(--t-lg);
-  line-height: 1.6;
+  font-size: var(--t-md);
+  line-height: 1.55;
   color: var(--ink-2);
-  max-width: 34rem;
-  margin-bottom: var(--s6);
+  max-width: 40rem;
+  margin-bottom: var(--s5);
 }
 .hero__lede strong { color: var(--ink); font-weight: 550; }
 
-.hero__acts { display: flex; flex-wrap: wrap; gap: var(--s3); margin-bottom: var(--s7); }
+.hero__acts { display: flex; flex-wrap: wrap; gap: var(--s3); margin-bottom: 0; }
 
-/* Readout strip — mirrors an instrument's status line */
+/* Readout strip: mirrors an instrument's status line */
 .readout {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -383,7 +389,8 @@ a:hover { text-decoration-color: currentColor; }
 .plate__lbl { font-family: var(--mono); font-size: 7px; fill: var(--ink-3); }
 .plate__well { fill: var(--well-empty); }
 
-.plate__read { fill: var(--accent); opacity: 0; }
+.plate__read { fill: var(--accent); opacity: 0;
+               transform-box: fill-box; transform-origin: center; }
 .plate__read--hit { fill: var(--signal); }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -409,8 +416,8 @@ a:hover { text-decoration-color: currentColor; }
 }
 @media (min-width: 860px) {
   .area {
-    grid-template-columns: 3.5rem minmax(0, 17rem) minmax(0, 1fr);
-    gap: var(--s6);
+    grid-template-columns: minmax(0, 17.5rem) minmax(0, 1fr);
+    gap: var(--s7);
     align-items: start;
   }
 }
@@ -436,6 +443,10 @@ a:hover { text-decoration-color: currentColor; }
 /* --- Publication records -------------------------------------------------- */
 
 .pubs { display: grid; gap: var(--s5); }
+/* Grid items default to `min-width: auto`, i.e. they refuse to shrink below
+   their widest unbreakable child. Without this a single DOI chip sized the
+   whole column and pushed the page sideways. */
+.pubs > * { min-width: 0; }
 
 .pub {
   border: 1px solid var(--line);
@@ -476,6 +487,7 @@ a:hover { text-decoration-color: currentColor; }
   font-family: var(--mono);
   transition: border-color .15s ease, color .15s ease;
 }
+.chip { overflow-wrap: anywhere; }
 .chip:hover { border-color: var(--accent); color: var(--accent); }
 .chip svg { width: 13px; height: 13px; }
 
@@ -488,11 +500,24 @@ a:hover { text-decoration-color: currentColor; }
   color: var(--ink-2);
 }
 .disclose__in h4 { font-size: var(--t-cap); color: var(--ink); margin-bottom: var(--s2); }
-.disclose pre {
+/* Citation blocks. This used to be scoped to `.disclose`, a wrapper the markup
+   never actually renders -- so the rule matched nothing and every <pre> fell
+   back to the UA default `white-space: pre`, which pushed the eight-author APA
+   line out to ~3000px and widened the whole page. Keyed off the element now, so
+   a <pre> added anywhere is contained by default.
+
+   pre-wrap, not pre: the APA citation is a sentence and should wrap like one,
+   and BibTeX keeps its real newlines while long lines fold. Copying is
+   unaffected -- soft wraps are not part of the copied text. */
+pre {
   font-family: var(--mono); font-size: var(--t-xs); line-height: 1.6;
   background: var(--bg-sunk); border: 1px solid var(--line); border-radius: var(--r-md);
-  padding: var(--s4); overflow-x: auto; margin: 0; color: var(--ink-2);
-  white-space: pre; tab-size: 2;
+  padding: var(--s4); margin: 0; color: var(--ink-2);
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+  overflow-x: auto;
+  max-width: 100%;
+  tab-size: 2;
 }
 
 /* --- Article (publication detail + notes) --------------------------------- */
@@ -689,3 +714,442 @@ a:hover { text-decoration-color: currentColor; }
 .byline__s { font-size: var(--t-sm); color: var(--ink-2); margin: 0; }
 .aside .byline { flex-direction: column; align-items: flex-start; text-align: left; gap: var(--s4); }
 .aside .byline img { width: 92px; height: 92px; }
+
+/* ==========================================================================
+   Data visualisation
+   Categorical slots are a fixed order, never cycled. Both modes were validated
+   all-pairs (lightness band, chroma floor, CVD separation, normal-vision floor,
+   contrast) against their own surface. The dark column is stepped for the dark
+   surface, not an automatic flip of the light one.
+   ========================================================================== */
+
+:root {
+  --v1: #5341C9;   /* violet  · primary series */
+  --v2: #9D6300;   /* amber   */
+  --v3: #008758;   /* green   */
+  --v4: #0079B3;   /* blue    */
+  --v-dim:  #9FB0C6;
+  --v-good: #116A3E;
+  --v-crit: #B3261E;
+  --v-good-bg: #E6F4EC;
+  --v-crit-bg: #FBEAE8;
+  --v-grid: #E4EAF3;
+  --v-axis: #C3CEDF;
+  --v-band: rgba(83, 65, 201, .07);
+  --v-det:  #5341C9;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --v1: #8E5FFF;
+    --v2: #B97500;
+    --v3: #009F68;
+    --v4: #008FD2;
+    --v-dim:  #56678100;
+    --v-dim:  #566781;
+    --v-good: #3BA76B;
+    --v-crit: #E8635C;
+    --v-good-bg: #0E2A1D;
+    --v-crit-bg: #2E1512;
+    --v-grid: #1A2539;
+    --v-axis: #2C3B55;
+    --v-band: rgba(142, 95, 255, .10);
+    --v-det:  #9C7BFF;
+  }
+}
+:root[data-theme="dark"] {
+  --v1: #8E5FFF;
+  --v2: #B97500;
+  --v3: #009F68;
+  --v4: #008FD2;
+  --v-dim:  #566781;
+  --v-good: #3BA76B;
+  --v-crit: #E8635C;
+  --v-good-bg: #0E2A1D;
+  --v-crit-bg: #2E1512;
+  --v-grid: #1A2539;
+  --v-axis: #2C3B55;
+  --v-band: rgba(142, 95, 255, .10);
+  --v-det:  #9C7BFF;
+}
+
+/* --- figure shell --------------------------------------------------------- */
+
+.fig {
+  margin: var(--s7) 0;
+  padding: var(--s5);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  background: var(--surface);
+}
+.fig__head { margin-bottom: var(--s4); }
+.fig__title { font-size: var(--t-md); margin-bottom: var(--s2); }
+.fig__sub { font-size: var(--t-sm); color: var(--ink-2); margin: 0; max-width: 62ch; }
+.fig__plot { margin: var(--s4) 0 var(--s3); }
+.fig__note { font-size: var(--t-sm); color: var(--ink-2); margin: var(--s3) 0 0; max-width: 62ch; }
+
+.viz { width: 100%; height: auto; display: block; overflow: visible; }
+
+/* --- marks ---------------------------------------------------------------- */
+
+.viz__grid  { stroke: var(--v-grid); stroke-width: 1; }
+.viz__axis  { stroke: var(--v-axis); stroke-width: 1; }
+.viz__rule  { stroke: var(--ink-3); stroke-width: 1; stroke-dasharray: 4 3; opacity: .8; }
+.viz__band  { fill: var(--v-band); }
+.viz__zebra { fill: var(--bg-sunk); }
+.viz__line  { fill: none; stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; }
+.viz__stem  { stroke: var(--v-axis); stroke-width: 1; }
+.viz__dot   { stroke: var(--surface); stroke-width: 2; }
+.viz__bar   { stroke: none; }
+.viz__cell  { stroke: var(--surface); stroke-width: 2; }
+.viz__cellempty { fill: var(--v-axis); }
+.viz__node  { stroke: var(--surface); stroke-width: 1.5; }
+.viz__edge  { stroke: var(--v-axis); stroke-width: .6; opacity: .55; }
+.viz__zoneok   { fill: var(--v-good-bg); }
+.viz__zoneflag { fill: var(--v-crit-bg); }
+
+/* --- figure text: text tokens, never the series colour -------------------- */
+
+.viz text { font-family: var(--sans); }
+.viz__tick    { font-family: var(--mono); font-size: 10px; fill: var(--ink-3); font-variant-numeric: tabular-nums; }
+.viz__axlbl   { font-size: 11px; fill: var(--ink-2); }
+.viz__rowlbl  { font-size: 12px; fill: var(--ink); font-weight: 500; }
+.viz__rowsub  { font-size: 10px; fill: var(--ink-3); }
+.viz__val     { font-family: var(--mono); font-size: 11px; fill: var(--ink); font-weight: 500; }
+.viz__colhdr  { font-size: 11px; fill: var(--ink-2); }
+.viz__slbl    { font-size: 11px; font-weight: 600; }
+.viz__rulelbl { font-size: 10px; fill: var(--ink-3); }
+.viz__bandlbl { font-size: 10px; fill: var(--ink-3); }
+.viz__zonelbl { font-size: 11px; fill: var(--ink); font-weight: 500; }
+.viz__nodelbl { font-size: 10px; fill: var(--ink-3); }
+.viz__nodeval { font-family: var(--mono); font-size: 12px; fill: var(--ink); font-weight: 500; }
+
+/* --- legend --------------------------------------------------------------- */
+
+.lg { list-style: none; padding: 0; margin: var(--s3) 0 0; display: flex; flex-wrap: wrap; gap: var(--s2) var(--s5); }
+.lg__i { display: inline-flex; align-items: center; gap: var(--s2); margin: 0; font-size: var(--t-sm); color: var(--ink-2); }
+.lg__k { width: 10px; height: 10px; border-radius: 2px; flex: none; }
+
+/* --- data table (accessibility + machine readability) --------------------- */
+
+.fig__data { margin-top: var(--s4); border-top: 1px solid var(--line); padding-top: var(--s3); }
+.fig__data summary {
+  font-size: var(--t-sm); color: var(--ink-2); cursor: pointer;
+  list-style: none; display: inline-flex; align-items: center; gap: var(--s2);
+}
+.fig__data summary::-webkit-details-marker { display: none; }
+.fig__data summary::before { content: "+"; font-family: var(--mono); color: var(--accent); }
+.fig__data[open] summary::before { content: "\2212"; }
+.fig__data summary:hover { color: var(--accent); }
+.fig__tablewrap { overflow-x: auto; margin-top: var(--s4); }
+.fig__table { border-collapse: collapse; width: 100%; font-size: var(--t-sm); }
+.fig__table caption { text-align: left; font-size: var(--t-xs); color: var(--ink-3); margin-bottom: var(--s2); }
+.fig__table th, .fig__table td {
+  text-align: left; padding: var(--s2) var(--s4) var(--s2) 0;
+  border-bottom: 1px solid var(--line); vertical-align: top;
+}
+.fig__table thead th { color: var(--ink-3); font-weight: 500; font-size: var(--t-xs); }
+.fig__table tbody th { font-weight: 500; color: var(--ink); }
+.fig__table td { color: var(--ink-2); font-variant-numeric: tabular-nums; }
+
+/* --- provenance ----------------------------------------------------------- */
+
+.fig__prov {
+  margin: var(--s4) 0 0; font-size: var(--t-xs); color: var(--ink-3);
+  line-height: 1.55; max-width: 72ch;
+}
+.fig__badge {
+  display: inline-block; font-family: var(--mono); font-size: var(--t-xs);
+  padding: .1rem .4rem; border-radius: var(--r-sm); margin-right: var(--s2);
+  border: 1px solid currentColor;
+}
+.fig__badge--measured  { color: var(--v-good); }
+.fig__badge--reported  { color: var(--v1); }
+.fig__badge--computed  { color: var(--v2); }
+.fig__badge--schematic { color: var(--ink-3); }
+
+/* --- detector ------------------------------------------------------------- */
+
+.det { max-width: 420px; margin-inline: auto; }
+.det__bg   { fill: var(--bg-sunk); }
+.det__ring { fill: none; stroke: var(--v-det); }
+.det__stop { fill: var(--bg-sunk); stroke: var(--v-axis); stroke-width: 1; }
+.det__arm  { stroke: var(--v-axis); stroke-width: 3; }
+.det__lbl  { font-family: var(--mono); font-size: 10px; fill: var(--ink-3); }
+.det__sweep {
+  fill: none; stroke: var(--v-det); stroke-width: 1.5; opacity: .5;
+  stroke-dasharray: 3 340; transform-origin: 50% 50%;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .det__sweep { animation: sweep 9s linear infinite; }
+}
+@keyframes sweep { to { transform: rotate(360deg); } }
+
+/* --- stat tiles ----------------------------------------------------------- */
+
+.tiles { display: grid; gap: var(--s4); grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); margin: var(--s6) 0; }
+.tile { border: 1px solid var(--line); border-radius: var(--r-md); padding: var(--s4); background: var(--surface); }
+.tile__v { font-family: var(--mono); font-size: var(--t-2xl); line-height: 1.05; letter-spacing: -.03em; color: var(--ink); display: block; margin-bottom: var(--s2); }
+.tile__k { font-size: var(--t-xs); color: var(--ink-3); line-height: 1.4; display: block; }
+
+/* Narrow screens: a chart scaled to 350px turns 10px type into 5px type. Let the
+   plot scroll horizontally at its native size instead, and lean on the data table
+   (which is always present) as the real fallback. */
+@media (max-width: 720px) {
+  .fig { padding: var(--s4); }
+  .fig__plot {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain;
+    padding-bottom: var(--s2);
+  }
+  .fig__plot > .viz, .fig__plot > .det > .viz { min-width: 600px; }
+  .det { max-width: none; }
+  .fig__plot::after {
+    content: "Scroll the chart sideways, or open the numbers below.";
+    display: block; font-size: var(--t-xs); color: var(--ink-3);
+    padding-top: var(--s2); position: sticky; left: 0;
+  }
+}
+
+/* --- flow diagram --------------------------------------------------------- */
+
+.flow__box   { fill: var(--bg-sunk); stroke: var(--line); stroke-width: 1; }
+.flow__n     { font-family: var(--mono); font-size: 10px; fill: var(--accent); }
+.flow__lbl   { font-size: 11px; fill: var(--ink); font-weight: 500; }
+.flow__sub   { font-size: 10px; fill: var(--ink-3); }
+.flow__arrow { fill: none; stroke: var(--v-axis); stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+
+/* --- deep research page layout -------------------------------------------- */
+
+.deep .prose { max-width: var(--measure); }
+.deep .fig { max-width: 860px; }
+.deep > section { padding-block: var(--s7); border-top: 1px solid var(--line); }
+.deep > section:first-child { border-top: 0; padding-top: var(--s5); }
+.deep h2 { font-size: var(--t-xl); margin-bottom: var(--s4); max-width: 30ch; }
+
+.pagenav { display: grid; gap: 0; border-top: 1px solid var(--line); margin-top: var(--s6); }
+.pagenav a {
+  display: grid; gap: var(--s1); padding: var(--s4) 0;
+  border-bottom: 1px solid var(--line); text-decoration: none; color: var(--ink);
+}
+.pagenav a:hover { color: var(--accent); }
+.pagenav__k { font-family: var(--mono); font-size: var(--t-xs); color: var(--ink-3); }
+.pagenav__t { font-size: var(--t-md); font-weight: 550; }
+.pagenav__d { font-size: var(--t-sm); color: var(--ink-2); max-width: var(--measure); }
+
+/* --- chart tooltip -------------------------------------------------------- */
+
+.viztip {
+  position: absolute; z-index: 80; pointer-events: none;
+  background: var(--ink); color: var(--bg);
+  font-size: var(--t-xs); font-family: var(--sans);
+  padding: var(--s2) var(--s3); border-radius: var(--r-sm);
+  max-width: 260px; line-height: 1.4;
+  opacity: 0; transition: opacity .12s ease;
+  box-shadow: var(--shadow-2);
+}
+.viztip[data-show="true"] { opacity: 1; }
+.viz circle, .viz rect { transition: opacity .12s ease; }
+.viz circle:hover, .viz rect:hover { opacity: .82; }
+
+/* ==========================================================================
+   Hero pipeline: one orchestrated entrance, then still.
+   Scattered per-section reveals read as filler; this is the single moment
+   the page spends motion on, and it traces the actual order of the work.
+   ========================================================================== */
+
+.hp__k { font-family: var(--sans); font-size: 13px; font-weight: 600; fill: var(--ink); }
+.hp__c { font-family: var(--sans); font-size: 11px; fill: var(--ink-3); }
+
+.hp__well  { fill: var(--well-empty); }
+.hp__read  { fill: var(--accent); opacity: var(--o, .5);
+             transform-box: fill-box; transform-origin: center; }
+.hp__read--hit { fill: var(--signal); }
+
+.hp__detbg { fill: var(--bg-sunk); }
+.hp__ring  { fill: none; stroke: var(--v-det); opacity: var(--o, .5); }
+.hp__stop  { fill: var(--bg-sunk); stroke: var(--line-strong); stroke-width: 1; }
+.hp__sweep {
+  fill: none; stroke: var(--v-det); stroke-width: 1.5; opacity: .55;
+  stroke-dasharray: 3 620;
+}
+
+.hp__ax    { stroke: var(--line-strong); stroke-width: 1; }
+.hp__curve { fill: none; stroke: var(--accent); stroke-width: 2.5; stroke-linecap: round; }
+.hp__edge  { stroke: var(--line-strong); stroke-width: .8; opacity: .8; }
+.hp__node  { fill: var(--accent); }
+.hp__arrow { fill: none; stroke: var(--ink-3); stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.hp__loop  { fill: none; stroke: var(--line-strong); stroke-width: 1.4; stroke-linecap: round; stroke-linejoin: round; }
+.hp__loopc { font-family: var(--sans); font-size: 11px; fill: var(--ink-3); }
+
+@media (prefers-reduced-motion: no-preference) {
+  .hp__read  { opacity: 0; animation: hpWell .45s ease-out var(--d, 0s) forwards; }
+  .hp__ring  { opacity: 0; animation: hpRing .5s ease-out var(--d, 0s) forwards; }
+  .hp__arrow,
+  .hp__loop  { stroke-dasharray: 1; stroke-dashoffset: 1;
+               animation: hpDraw .55s ease-out var(--d, 2.8s) forwards; }
+  .hp__curve { stroke-dasharray: 1; stroke-dashoffset: 1;
+               animation: hpDraw .9s ease-out 2s forwards; }
+  .hp__node  { opacity: 0; animation: hpPop .4s ease-out var(--d, 2.3s) forwards; }
+  .hp__loopc { opacity: 0; animation: hpFade .6s ease-out 3.1s forwards; }
+  .hp__sweep { animation: hpSweep 11s linear 2s infinite; }
+}
+
+@keyframes hpWell  { from { opacity: 0; transform: scale(.3); }
+                     to   { opacity: var(--o, .5); transform: scale(1); } }
+@keyframes hpRing  { to { opacity: var(--o, .5); } }
+@keyframes hpDraw  { to { stroke-dashoffset: 0; } }
+@keyframes hpPop   { from { opacity: 0; } to { opacity: 1; } }
+@keyframes hpFade  { to { opacity: 1; } }
+@keyframes hpSweep { to { transform: rotate(360deg); } }
+
+.hero__pipe { margin-top: var(--s6); }
+.hero__pipe svg { width: 100%; height: auto; display: block; overflow: visible; }
+.hero__pipecap {
+  margin: var(--s4) 0 var(--s6); font-size: var(--t-sm); color: var(--ink-3);
+  max-width: 76ch; line-height: 1.55;
+}
+.hero__pipecap b { color: var(--ink-2); font-weight: 550; }
+
+/* Below 900px the three panels would render at unreadable type, so the hero
+   falls back to the single strongest object. */
+.hero__pipe--sm { display: none; }
+@media (max-width: 900px) {
+  .hero__pipe--lg { display: none; }
+  .hero__pipe--sm { display: block; max-width: 364px; margin-inline: auto; }
+}
+
+/* --- area thumbnails ------------------------------------------------------ */
+
+.th { border: 1px solid var(--line); border-radius: var(--r-md); background: var(--bg-sunk);
+      padding: var(--s3); margin-bottom: var(--s4); }
+.th svg { width: 100%; height: auto; display: block; }
+.th__d      { fill: var(--accent); }
+.th__d--hit { fill: var(--signal); }
+.th__d--dim { fill: var(--v-dim); }
+.th__ax     { stroke: var(--line-strong); stroke-width: 1; }
+.th__lbl    { font-family: var(--mono); font-size: 10px; fill: var(--ink-2); }
+.th__sub    { font-family: var(--sans); font-size: 9px; fill: var(--ink-3); }
+.th__arrow  { fill: none; stroke: var(--ink-3); stroke-width: 1.4; stroke-linecap: round; stroke-linejoin: round; }
+.th__curve  { fill: none; stroke: var(--accent); stroke-width: 2; stroke-linecap: round; }
+
+/* --- hero, rebuilt around the pipeline ------------------------------------ */
+
+.hero__top { max-width: 44rem; }
+.hero__top .hero__lede { max-width: 38rem; }
+
+/* --- reel: the automation loop behind "What I work on" --------------------- */
+
+.sec--reel {
+  position: relative;
+  isolation: isolate;        /* so the negative-z children sit above the section
+                                background but below the content */
+  overflow: hidden;
+  background: #060B14;
+  padding-block: var(--s8);
+
+  /* The backdrop is dark video in both themes, so the section carries the dark
+     palette regardless of the page theme. Every descendant -- rules, tags,
+     thumbnails, buttons, chart strokes -- reads these and follows. */
+  --bg:            #070D18;
+  --bg-sunk:       #0A1220;
+  --surface:       #0E1726;
+  --surface-raise: #152036;
+  --line:          #27364F;
+  --line-strong:   #3A4C6B;
+  --ink:           #EEF3FA;
+  --ink-2:         #BAC7DA;
+  --ink-3:         #A3B1C6;   /* lighter than the page's: it sits over moving
+                                  footage and still has to clear 4.5:1 */
+  --accent:        #A596FF;
+  --accent-soft:   #1B1B3D;
+  --accent-ink:    #C3B8FF;
+  --signal:        #F5B841;
+  --signal-soft:   #2B2210;
+  --well-empty:    #16223A;
+  --shadow-1:      0 1px 2px rgba(0, 0, 0, .4);
+  --shadow-2:      0 16px 40px -16px rgba(0, 0, 0, .7);
+  --v1: #A08BFF;   --v2: #D08A1E;   --v3: #12B87A;   --v4: #2BA3E0;
+  --v-dim: #6B7C96;  --v-good: #3BA76B;  --v-crit: #E8635C;
+  --v-good-bg: #0E2A1D;  --v-crit-bg: #2E1512;
+  --v-grid: #1F2C42;  --v-axis: #35476590;  --v-band: rgba(165, 150, 255, .10);
+  --v-det: #B49CFF;
+
+  color: var(--ink);
+}
+.sec--reel .wrap { position: relative; }
+.sec--reel .sec__head p { color: var(--ink-2); }
+
+.sec--reel .reel__v {
+  position: absolute; inset: 0; z-index: -2;
+  width: 100%; height: 100%;
+  object-fit: cover; object-position: 50% 50%;
+  /* Left sharp and close to full brightness: the content sits on its own
+     surface, so the footage does not have to be beaten down to stay legible. */
+  filter: saturate(.85) contrast(1.02) brightness(.95);
+}
+
+/* Only enough to settle the footage into the page and soften the joins with the
+   light sections above and below -- the text no longer depends on it. */
+.reel__scrim {
+  position: absolute; inset: 0; z-index: -1;
+  background:
+    linear-gradient(to bottom, rgba(6,11,20,.92), rgba(6,11,20,.22) 18%,
+                    rgba(6,11,20,.22) 82%, rgba(6,11,20,.92)),
+    radial-gradient(130% 100% at 50% 50%, rgba(6,11,20,.10), rgba(6,11,20,.55));
+}
+
+/* The content rides on its own surface rather than directly on the footage.
+   That is what keeps contrast constant while the clip moves underneath -- and
+   it is what lets the video stay bright enough to actually see. */
+.reel__panel {
+  position: relative;
+  padding: var(--s8) var(--s7);
+  border: 1px solid rgba(255, 255, 255, .11);
+  border-radius: var(--r-lg);
+  background: rgba(7, 13, 24, .78);
+  box-shadow: var(--shadow-2);
+  -webkit-backdrop-filter: blur(16px) saturate(130%);
+          backdrop-filter: blur(16px) saturate(130%);
+}
+@media (max-width: 640px) {
+  .reel__panel { padding: var(--s6) var(--s5); border-radius: var(--r-md); }
+}
+
+/* WCAG 2.2.2: motion that loops past five seconds needs a way to stop it. */
+.reel__btn {
+  position: absolute; top: var(--s4); right: var(--s4); z-index: 2;
+  display: grid; place-items: center;
+  width: 2.25rem; height: 2.25rem; padding: 0;
+  border: 1px solid rgba(255, 255, 255, .26);
+  border-radius: 999px;
+  background: rgba(6, 11, 20, .6);
+  color: #fff;
+  cursor: pointer;
+  backdrop-filter: blur(6px);
+  transition: background .15s ease, border-color .15s ease;
+}
+.reel__btn:hover { background: rgba(6, 11, 20, .85); border-color: rgba(255, 255, 255, .5); }
+.reel__btn svg { width: 16px; height: 16px; fill: currentColor; stroke: none; }
+.reel__btn svg:last-child { display: none; }
+.reel__btn[data-playing="false"] svg:first-child { display: none; }
+.reel__btn[data-playing="false"] svg:last-child  { display: block; }
+
+/* Inside the panel, not on the footage: it is small mono type, the one thing
+   that cannot survive a bright frame passing under it. */
+.reel__prov {
+  margin: var(--s5) 0 0; padding-top: var(--s4);
+  border-top: 1px solid var(--line);
+  font-family: var(--mono); font-size: var(--t-xs);
+  color: var(--ink-3); max-width: 68ch; line-height: 1.55;
+}
+
+@media (max-width: 640px) {
+  .reel__btn { top: var(--s3); right: var(--s3); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* main.js pauses the element; this keeps the poster from drifting too. */
+  .sec--reel .reel__v { transform: none; }
+}

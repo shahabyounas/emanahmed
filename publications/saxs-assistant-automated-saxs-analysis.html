@@ -14,14 +14,14 @@
 <meta property="og:url" content="https://emanahmed.org/publications/saxs-assistant-automated-saxs-analysis.html">
 <meta property="og:title" content="SAXS Assistant: Automated SAXS Analysis | Eman Ahmed">
 <meta property="og:description" content="Open-source Python tool that automates SAXS analysis, estimates maximum particle dimension with machine learning, and flags low-confidence results.">
-<meta property="og:image" content="https://emanahmed.org/images/og-image.png">
+<meta property="og:image" content="https://emanahmed.org/images/og-image.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="Eman Ahmed, PhD candidate in biomedical engineering at Rutgers University">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="SAXS Assistant: Automated SAXS Analysis | Eman Ahmed">
 <meta name="twitter:description" content="Open-source Python tool that automates SAXS analysis, estimates maximum particle dimension with machine learning, and flags low-confidence results.">
-<meta name="twitter:image" content="https://emanahmed.org/images/og-image.png">
+<meta name="twitter:image" content="https://emanahmed.org/images/og-image.jpg">
 <meta name="citation_title" content="SAXS Assistant: Automated SAXS analysis for structural discovery in biologics and polymeric nanoparticles">
 <meta name="citation_author" content="Cesar Ramirez">
 <meta name="citation_author" content="Elena Di Mare">
@@ -80,9 +80,9 @@
       </div>
       <div class="prose">
         <h2>In short</h2>
-        <p>SAXS tells you the size and shape of something in solution, but getting there involves judgement calls — where to set the Guinier range, whether a P(r) fit is trustworthy, what maximum dimension to believe. Those calls are slow and they vary between analysts, which is a problem once you are producing hundreds of profiles. SAXS Assistant automates the pipeline, trains a model on 1,940 experimental profiles from the SASBDB to estimate Dmax, clusters profiles against known biomolecular shapes, and flags results it is not confident about instead of quietly returning them.</p>
+        <p>SAXS tells you the size and shape of something in solution, but getting there involves judgement calls: where to set the Guinier range, whether a P(r) fit is trustworthy, what maximum dimension to believe. Those calls are slow and they vary between analysts, which is a problem once you are producing hundreds of profiles. SAXS Assistant automates the pipeline, trains a model on 1,940 experimental profiles from the SASBDB to estimate Dmax, clusters profiles against known biomolecular shapes, and flags results it is not confident about instead of quietly returning them.</p>
         <h2>Why it matters</h2>
-        <ul><li>Trained only on experimental SASBDB data, so the model reproduces how practitioners actually analyse profiles rather than idealised simulations.</li><li>Reports test-set R² = 0.90 and mean absolute error of 11.7 Å for maximum particle dimension.</li><li>Flags low-confidence results rather than returning them silently — the quality control is part of the tool, not a separate manual step.</li><li>Released open source on PyPI and built on BioXTAS RAW, so it slots into existing SAXS workflows.</li></ul>
+        <ul><li>Trained only on experimental SASBDB data, so the model reproduces how practitioners actually analyse profiles rather than idealised simulations.</li><li>Reports test-set R² = 0.90 and mean absolute error of 11.7 Å for maximum particle dimension.</li><li>Flags low-confidence results rather than returning them silently, so the quality control is part of the tool, not a separate manual step.</li><li>Released open source on PyPI and built on BioXTAS RAW, so it slots into existing SAXS workflows.</li></ul>
         <h2>Abstract</h2>
         <blockquote><p>Small-angle x-ray scattering (SAXS) is a powerful technique for assessing macromolecular structure. High-throughput SAXS is limited by the time-consuming and, at times, subjective nature of SAXS data interpretation. Here, we present SAXS Assistant, a Python-based script that streamlines SAXS data analysis to extract features for machine learning (ML) and key structural parameters, including the Guinier radius of gyration (Rg), pair distance distribution function (PDDF)-derived Rg, maximum particle dimension (Dmax), and Kratky plots. The script builds upon BioXTAS RAW and validates reliability via Guinier/PDDF Rg agreement, an important indicator of well-measured data sets. For assistance in Dmax estimation, a multilayer perceptron regressor was trained with 1940 data files from the Small Angle Scattering Biological Data Bank. The model achieved a test set performance R2 = 0.90 and mean absolute error = 11.7 Å. Training exclusively with experimental data translates analyses from researchers, including experts in the field, to the ML model, which helps assess Dmax estimations from PDDF. Gaussian mixture model clustering was implemented to classify profiles into structural classes based on entries in the Small Angle Scattering Biological Data Bank. Users may therefore assess the similarity between experimental samples and known biomolecular shapes within the mapped repository entries. This probabilistic clustering aids in quantifying information from Kratky and generating shape-descriptive features. SAXS Assistant accelerates SAXS data analysis through enforced quality control, ML-ready outputs, and flags for low-confidence results. In addition to providing the ability to analyze large data sets at high throughput, this tool is versatile and may serve researchers in both biological and synthetic polymer research fields.</p>
         <p class="data" style="font-size:var(--t-xs);color:var(--ink-3);margin-bottom:0">
@@ -146,8 +146,7 @@
       </div>
       <div><h2>Sections</h2><ul><li><a href="../research.html">Research</a></li><li><a href="../publications.html">Publications</a></li><li><a href="../blog.html">Notes</a></li><li><a href="../cv.html">CV</a></li></ul></div>
       <div><h2>Elsewhere</h2><ul>
-        <li><a href="https://scholar.google.com/citations?user=2X7j71EAAAAJ&hl=en" rel="me noopener">Google Scholar</a></li>
-        <li><a href="https://www.linkedin.com/in/eman-ahmed-14724613b/" rel="me noopener">LinkedIn</a></li>
+        <li><a href="https://scholar.google.com/citations?user=2X7j71EAAAAJ&hl=en" rel="me noopener">Google Scholar</a></li><li><a href="https://www.linkedin.com/in/eman-ahmed-14724613b/" rel="me noopener">LinkedIn</a></li>
         <li><a href="https://www.gormleylab.com/" rel="noopener">Gormley Lab</a></li>
         <li><a href="../teaching.html">Teaching</a></li><li><a href="../collaborators.html">Lab</a></li><li><a href="../contact.html">Contact</a></li>
       </ul></div>

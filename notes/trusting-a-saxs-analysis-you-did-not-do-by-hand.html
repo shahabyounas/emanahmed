@@ -14,14 +14,14 @@
 <meta property="og:url" content="https://emanahmed.org/notes/trusting-a-saxs-analysis-you-did-not-do-by-hand.html">
 <meta property="og:title" content="Trusting a SAXS analysis you didn't do by hand | Eman Ahmed">
 <meta property="og:description" content="SAXS analysis is full of judgement calls that vary between analysts. Automating it means making them explicit, and flagging profiles you should not trust.">
-<meta property="og:image" content="https://emanahmed.org/images/og-image.png">
+<meta property="og:image" content="https://emanahmed.org/images/og-image.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="Eman Ahmed, PhD candidate in biomedical engineering at Rutgers University">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Trusting a SAXS analysis you didn't do by hand | Eman Ahmed">
 <meta name="twitter:description" content="SAXS analysis is full of judgement calls that vary between analysts. Automating it means making them explicit, and flagging profiles you should not trust.">
-<meta name="twitter:image" content="https://emanahmed.org/images/og-image.png">
+<meta name="twitter:image" content="https://emanahmed.org/images/og-image.jpg">
 
 <link rel="icon" type="image/svg+xml" href="../images/favicon.svg">
 <link rel="apple-touch-icon" href="../images/apple-touch-icon.png">
@@ -33,7 +33,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;450;500;550;600&display=swap">
 <link rel="stylesheet" href="../css/styles.css">
 <script>try{var t=localStorage.getItem("theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","@id":"https://emanahmed.org/notes/trusting-a-saxs-analysis-you-did-not-do-by-hand.html#post","headline":"Trusting a SAXS analysis you didn't do by hand","name":"Trusting a SAXS analysis you didn't do by hand","url":"https://emanahmed.org/notes/trusting-a-saxs-analysis-you-did-not-do-by-hand.html","description":"Small-angle X-ray scattering analysis is full of judgement calls that vary between analysts. Automating it is less about speed than about making those calls explicit — and about flagging the profiles where the answer should not be trusted.","datePublished":"2026-01-22","dateModified":"2026-01-22","author":{"@id":"https://emanahmed.org/#eman-ahmed"},"publisher":{"@id":"https://emanahmed.org/#eman-ahmed"},"inLanguage":"en","keywords":"SAXS, Machine learning, Reproducibility","isPartOf":{"@id":"https://emanahmed.org/blog.html#blog"},"image":"https://emanahmed.org/images/og-image.png","citation":{"@type":"ScholarlyArticle","name":"SAXS Assistant: Automated SAXS analysis for structural discovery in biologics and polymeric nanoparticles","sameAs":"https://doi.org/10.1016/j.bpj.2025.09.034"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://emanahmed.org/notes/trusting-a-saxs-analysis-you-did-not-do-by-hand.html"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","@id":"https://emanahmed.org/notes/trusting-a-saxs-analysis-you-did-not-do-by-hand.html#post","headline":"Trusting a SAXS analysis you didn't do by hand","name":"Trusting a SAXS analysis you didn't do by hand","url":"https://emanahmed.org/notes/trusting-a-saxs-analysis-you-did-not-do-by-hand.html","description":"Small-angle X-ray scattering analysis is full of judgement calls that vary between analysts. Automating it is less about speed than about making those calls explicit, and about flagging the profiles where the answer should not be trusted.","datePublished":"2026-01-22","dateModified":"2026-01-22","author":{"@id":"https://emanahmed.org/#eman-ahmed"},"publisher":{"@id":"https://emanahmed.org/#eman-ahmed"},"inLanguage":"en","keywords":"SAXS, Machine learning, Reproducibility","isPartOf":{"@id":"https://emanahmed.org/blog.html#blog"},"image":"https://emanahmed.org/images/og-image.jpg","citation":{"@type":"ScholarlyArticle","name":"SAXS Assistant: Automated SAXS analysis for structural discovery in biologics and polymeric nanoparticles","sameAs":"https://doi.org/10.1016/j.bpj.2025.09.034"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://emanahmed.org/notes/trusting-a-saxs-analysis-you-did-not-do-by-hand.html"}}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home"},{"@type":"ListItem","position":2,"name":"Notes","item":"https://emanahmed.org/blog.html"},{"@type":"ListItem","position":3,"name":"Trusting a SAXS analysis you didn't do by hand","item":"https://emanahmed.org/notes/trusting-a-saxs-analysis-you-did-not-do-by-hand.html"}]}</script>
 </head>
 <body><a class="skip" href="#main">Skip to content</a>
@@ -81,7 +81,7 @@ are generating hundreds of profiles from a high-throughput synthesis campaign, b
 <p>The design decision I think matters most in <a href="../publications/saxs-assistant-automated-saxs-analysis.html">SAXS
 Assistant</a> is that it does not simply report a number. There are two independent routes to a radius of gyration: the
 Guinier approximation at low <em>q</em>, and integration of the pair distance distribution function. On a well-measured
-dataset those two should agree. When they diverge, something is wrong &mdash; with the measurement, the buffer
+dataset those two should agree. When they diverge, something is wrong: with the measurement, the buffer
 subtraction, or the assumption of monodispersity.</p>
 
 <p>Using that agreement as a built-in quality gate means the tool has a basis for declining to answer, which is the
@@ -103,7 +103,7 @@ profiles down to the handful that deserve it.</p>
 
 <p>The other piece is classification. We fitted a Gaussian mixture model over SASBDB entries to group scattering profiles
 into structural classes, so a user can ask how closely an experimental sample resembles known biomolecular shapes. The
-Kratky plot has always carried this information &mdash; folded, unfolded, multidomain &mdash; but reading it has been
+Kratky plot has always carried this information (folded, unfolded, multidomain), but reading it has been
 qualitative. Clustering makes it a probability rather than an impression, without overclaiming that you have solved a
 structure.</p>
 
@@ -111,12 +111,12 @@ structure.</p>
 
 <p>Automating an analysis forces you to write down the decisions that were previously made implicitly. That is
 uncomfortable, because some of them turn out not to have a principled basis. It is also the only way to make the
-analysis reproducible &mdash; and the flags for low-confidence results are, in the end, more valuable than the speed.</p>
+analysis reproducible, and the flags for low-confidence results are, in the end, more valuable than the speed.</p>
 
         <h2>Source</h2>
         <p>This note summarises <a href="../publications/saxs-assistant-automated-saxs-analysis.html">SAXS Assistant: Automated SAXS analysis for structural discovery in biologics and polymeric nanoparticles</a>
         (Ramirez, Mare, Byrnes et al., <em>Biophysical Journal</em>,
-        2025; <a href="https://doi.org/10.1016/j.bpj.2025.09.034" rel="noopener">doi:10.1016/j.bpj.2025.09.034</a>).
+        2025; <a class="data" href="https://doi.org/10.1016/j.bpj.2025.09.034" rel="noopener">doi:10.1016/j.bpj.2025.09.034</a>).
         These notes are plain-language companions to peer-reviewed work. Every factual claim traces to the paper linked at the end of the note.</p>
         <ul class="tags"><li><span class="tag">SAXS</span></li><li><span class="tag">Machine learning</span></li><li><span class="tag">Reproducibility</span></li></ul>
       </div>
@@ -152,8 +152,7 @@ analysis reproducible &mdash; and the flags for low-confidence results are, in t
       </div>
       <div><h2>Sections</h2><ul><li><a href="../research.html">Research</a></li><li><a href="../publications.html">Publications</a></li><li><a href="../blog.html">Notes</a></li><li><a href="../cv.html">CV</a></li></ul></div>
       <div><h2>Elsewhere</h2><ul>
-        <li><a href="https://scholar.google.com/citations?user=2X7j71EAAAAJ&hl=en" rel="me noopener">Google Scholar</a></li>
-        <li><a href="https://www.linkedin.com/in/eman-ahmed-14724613b/" rel="me noopener">LinkedIn</a></li>
+        <li><a href="https://scholar.google.com/citations?user=2X7j71EAAAAJ&hl=en" rel="me noopener">Google Scholar</a></li><li><a href="https://www.linkedin.com/in/eman-ahmed-14724613b/" rel="me noopener">LinkedIn</a></li>
         <li><a href="https://www.gormleylab.com/" rel="noopener">Gormley Lab</a></li>
         <li><a href="../teaching.html">Teaching</a></li><li><a href="../collaborators.html">Lab</a></li><li><a href="../contact.html">Contact</a></li>
       </ul></div>

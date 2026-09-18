@@ -14,14 +14,14 @@
 <meta property="og:url" content="https://emanahmed.org/notes/biomaterials-discovery-needs-the-failures.html">
 <meta property="og:title" content="Biomaterials discovery needs the experiments that failed | Eman Ahmed">
 <meta property="og:description" content="The biomaterials literature records what worked, so models trained on it never see the boundary of the useful region. High-throughput screening fixes that.">
-<meta property="og:image" content="https://emanahmed.org/images/og-image.png">
+<meta property="og:image" content="https://emanahmed.org/images/og-image.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="Eman Ahmed, PhD candidate in biomedical engineering at Rutgers University">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Biomaterials discovery needs the experiments that failed | Eman Ahmed">
 <meta name="twitter:description" content="The biomaterials literature records what worked, so models trained on it never see the boundary of the useful region. High-throughput screening fixes that.">
-<meta name="twitter:image" content="https://emanahmed.org/images/og-image.png">
+<meta name="twitter:image" content="https://emanahmed.org/images/og-image.jpg">
 
 <link rel="icon" type="image/svg+xml" href="../images/favicon.svg">
 <link rel="apple-touch-icon" href="../images/apple-touch-icon.png">
@@ -33,7 +33,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;450;500;550;600&display=swap">
 <link rel="stylesheet" href="../css/styles.css">
 <script>try{var t=localStorage.getItem("theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","@id":"https://emanahmed.org/notes/biomaterials-discovery-needs-the-failures.html#post","headline":"Biomaterials discovery needs the experiments that failed","name":"Biomaterials discovery needs the experiments that failed","url":"https://emanahmed.org/notes/biomaterials-discovery-needs-the-failures.html","description":"Machine learning on biomaterials data keeps running into the same problem: the published record is a survivorship-biased sample of what worked. High-throughput experimentation is one of the few ways to fix that at the source.","datePublished":"2025-11-12","dateModified":"2025-11-12","author":{"@id":"https://emanahmed.org/#eman-ahmed"},"publisher":{"@id":"https://emanahmed.org/#eman-ahmed"},"inLanguage":"en","keywords":"Machine learning, Biomaterials, Research practice","isPartOf":{"@id":"https://emanahmed.org/blog.html#blog"},"image":"https://emanahmed.org/images/og-image.png","citation":{"@type":"ScholarlyArticle","name":"Mapping Biomaterial Complexity by Machine Learning","sameAs":"https://doi.org/10.1089/ten.tea.2024.0067"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://emanahmed.org/notes/biomaterials-discovery-needs-the-failures.html"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","@id":"https://emanahmed.org/notes/biomaterials-discovery-needs-the-failures.html#post","headline":"Biomaterials discovery needs the experiments that failed","name":"Biomaterials discovery needs the experiments that failed","url":"https://emanahmed.org/notes/biomaterials-discovery-needs-the-failures.html","description":"Machine learning on biomaterials data keeps running into the same problem: the published record is a survivorship-biased sample of what worked. High-throughput experimentation is one of the few ways to fix that at the source.","datePublished":"2025-11-12","dateModified":"2025-11-12","author":{"@id":"https://emanahmed.org/#eman-ahmed"},"publisher":{"@id":"https://emanahmed.org/#eman-ahmed"},"inLanguage":"en","keywords":"Machine learning, Biomaterials, Research practice","isPartOf":{"@id":"https://emanahmed.org/blog.html#blog"},"image":"https://emanahmed.org/images/og-image.jpg","citation":{"@type":"ScholarlyArticle","name":"Mapping Biomaterial Complexity by Machine Learning","sameAs":"https://doi.org/10.1089/ten.tea.2024.0067"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://emanahmed.org/notes/biomaterials-discovery-needs-the-failures.html"}}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home"},{"@type":"ListItem","position":2,"name":"Notes","item":"https://emanahmed.org/blog.html"},{"@type":"ListItem","position":3,"name":"Biomaterials discovery needs the experiments that failed","item":"https://emanahmed.org/notes/biomaterials-discovery-needs-the-failures.html"}]}</script>
 </head>
 <body><a class="skip" href="#main">Skip to content</a>
@@ -66,7 +66,7 @@ contribute, and rarely independently. The structure&ndash;function relationship 
 usually write down.</p>
 
 <p>The traditional response is to hold everything constant and vary one thing. It is rigorous, and in a space with this
-much interaction between variables it is close to hopeless &mdash; you sample a line through a space that has structure
+much interaction between variables it is close to hopeless. You sample a line through a space that has structure
 in every direction.</p>
 
 <h2>The obvious fix has a less obvious problem</h2>
@@ -78,7 +78,7 @@ in Tissue Engineering Part A</a> was written around.</p>
 
 <p>But models are only as good as what they learn from, and the biomaterials literature is a filtered sample. Papers
 report the formulations that worked. The ones that aggregated, or failed to release, or provoked an immune response, are
-mostly absent &mdash; not through dishonesty, but because a null result is hard to publish and the material was
+mostly absent, not through dishonesty, but because a null result is hard to publish and the material was
 abandoned.</p>
 
 <p>A model trained on that record learns which successful materials resemble other successful materials. It has very
@@ -91,7 +91,7 @@ precipitated are recorded with the same rigour as the ones that performed, becau
 instrument in the same run. You are not making a publication decision about each data point.</p>
 
 <p>The resulting dataset is balanced in a way that a literature-derived one structurally cannot be. That is a large part
-of why high-throughput experimentation and machine learning belong together &mdash; not because the throughput is
+of why high-throughput experimentation and machine learning belong together, not because the throughput is
 impressive, but because of what it does to the shape of the data.</p>
 
 <h2>Where data mining still helps</h2>
@@ -108,13 +108,13 @@ the other way round, you get a model that is confident about a region nobody has
 
 <p>If you accept that the failures carry information, some things follow. Record them with the same metadata as the
 successes. Do not discard a plate because most of it did not work. Report the full screened range, not the subset that
-supports the conclusion. And design assays so that failure produces a number rather than an absence &mdash; a solubility
+supports the conclusion. And design assays so that failure produces a number rather than an absence: a solubility
 of zero is data; a well you stopped measuring is not.</p>
 
         <h2>Source</h2>
         <p>This note summarises <a href="../publications/mapping-biomaterial-complexity-machine-learning.html">Mapping Biomaterial Complexity by Machine Learning</a>
         (Ahmed, Mulay, Ramirez et al., <em>Tissue Engineering Part A</em>,
-        2024; <a href="https://doi.org/10.1089/ten.tea.2024.0067" rel="noopener">doi:10.1089/ten.tea.2024.0067</a>).
+        2024; <a class="data" href="https://doi.org/10.1089/ten.tea.2024.0067" rel="noopener">doi:10.1089/ten.tea.2024.0067</a>).
         These notes are plain-language companions to peer-reviewed work. Every factual claim traces to the paper linked at the end of the note.</p>
         <ul class="tags"><li><span class="tag">Machine learning</span></li><li><span class="tag">Biomaterials</span></li><li><span class="tag">Research practice</span></li></ul>
       </div>
@@ -150,8 +150,7 @@ of zero is data; a well you stopped measuring is not.</p>
       </div>
       <div><h2>Sections</h2><ul><li><a href="../research.html">Research</a></li><li><a href="../publications.html">Publications</a></li><li><a href="../blog.html">Notes</a></li><li><a href="../cv.html">CV</a></li></ul></div>
       <div><h2>Elsewhere</h2><ul>
-        <li><a href="https://scholar.google.com/citations?user=2X7j71EAAAAJ&hl=en" rel="me noopener">Google Scholar</a></li>
-        <li><a href="https://www.linkedin.com/in/eman-ahmed-14724613b/" rel="me noopener">LinkedIn</a></li>
+        <li><a href="https://scholar.google.com/citations?user=2X7j71EAAAAJ&hl=en" rel="me noopener">Google Scholar</a></li><li><a href="https://www.linkedin.com/in/eman-ahmed-14724613b/" rel="me noopener">LinkedIn</a></li>
         <li><a href="https://www.gormleylab.com/" rel="noopener">Gormley Lab</a></li>
         <li><a href="../teaching.html">Teaching</a></li><li><a href="../collaborators.html">Lab</a></li><li><a href="../contact.html">Contact</a></li>
       </ul></div>

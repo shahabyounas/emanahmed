@@ -3,3 +3,9 @@ node_modules/
 public
 __pycache__/
 *.pyc
+
+# Working notes under _src/ must never ship: GitHub Pages serves the repo
+# verbatim (.nojekyll keeps underscore paths), so a committed file here is a
+# public URL. robots.txt Disallow stops crawling, not indexing.
+_src/*.md
+_src/overflow-test.mjs
