@@ -80,6 +80,9 @@ genuinely needs a plot, it needs real measured data behind it first.
 - Page URLs deliberately keep their `.html` extensions so that already-indexed
   URLs keep working. Do not rename them without setting up redirects.
 - `.nojekyll` is present so GitHub Pages serves the files exactly as generated.
+- The footer on every page credits WebOctals and links to `/weboctals.html`, the colophon
+  page (`build_weboctals()` in `_src/build.py`). It is deliberately not in `NAV` — it is a
+  credit page, not one of the site's own sections.
 - No page may scroll horizontally at 320px — `node _src/overflow-test.mjs` measures
   this in a real browser. Two things break it in practice: a `<pre>` or long token
   that cannot wrap, and a grid item keeping its default `min-width: auto`, which

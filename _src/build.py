@@ -156,6 +156,8 @@ def foot(up=""):
     <div class="foot__base">
       <p>&copy; {datetime.date.today().year} Eman Ahmed. {P["city"]}, {P["region"]}, USA.</p>
       <p>Citation metrics from Google Scholar, {M["asof"]}.</p>
+      <p>Designed and built by <a href="{up}weboctals.html">WebOctals</a>
+      &middot; <a href="https://weboctals.com" rel="noopener">weboctals.com</a></p>
     </div>
   </div>
 </footer>
@@ -1366,6 +1368,102 @@ def build_contact():
     PAGES.append(("contact.html", TODAY, "0.7", "yearly"))
 
 # --------------------------------------------------------------------------
+# Colophon -- who built the site
+# --------------------------------------------------------------------------
+# Kept out of NAV on purpose: it is a credit page, not one of the site's own
+# sections. It is reached from the footer credit, which every page carries.
+WEBOCTALS = "https://weboctals.com"
+
+def build_weboctals():
+    desc = ("Colophon for emanahmed.org: the site was designed and built by WebOctals, as a dependency-free "
+            "static site generated from Python with hand-written CSS and no trackers.")
+    ld = [crumbs_node([("Home", ""), ("Built by WebOctals", "weboctals.html")]),
+          {"@context": "https://schema.org", "@type": "AboutPage", "url": f"{SITE}/weboctals.html",
+           "name": "Built by WebOctals | Eman Ahmed", "description": desc,
+           "about": {"@type": "WebSite", "@id": f"{SITE}/#website"},
+           "creator": {"@type": "Organization", "name": "WebOctals", "url": WEBOCTALS},
+           "dateModified": MODTOKEN}]
+    # Counted, not asserted: every page already appended to PAGES, plus this one.
+    npages = len(PAGES) + 1
+    body = f'''{rail("")}
+<main id="main">
+<div class="wrap art art--lead">
+  {crumbs_html([("Home","index.html"),("Built by WebOctals",None)])}
+  <div class="art__h">
+    <p class="art__kicker">Colophon</p>
+    <h1>This site was built by WebOctals</h1>
+    <p class="hero__lede" style="margin-bottom:0">emanahmed.org was designed and built by
+    <a href="{WEBOCTALS}" rel="noopener">WebOctals.com</a>. This page records how it is put
+    together, so that anyone reading a figure or citing a paper here can see what generated the
+    page they are looking at.</p>
+  </div>
+  <div class="tiles">
+    <div class="tile"><span class="tile__v">{npages}</span><span class="tile__k">Pages generated on every build</span></div>
+    <div class="tile"><span class="tile__v">0</span><span class="tile__k">Trackers, cookies or analytics scripts</span></div>
+    <div class="tile"><span class="tile__v">0</span><span class="tile__k">Front-end frameworks or build dependencies</span></div>
+  </div>
+</div>
+
+<section class="sec sec--first sec--tight"><div class="wrap">
+  <div class="sec__head sec__head--split">
+    <h2>What WebOctals built</h2>
+    <p>A research site whose job is to be found, read and cited &mdash; and to stay correct as the
+    work behind it changes.</p>
+  </div>
+  <dl class="facts">
+    <div><dt>A generator, not a pile of pages</dt>
+      <dd><p>Every page on the site is produced by a Python generator from a single source of record.
+      Publications, citation counts, research areas and profile identifiers are written once and render
+      everywhere they appear &mdash; page bodies, navigation, the CV, the sitemap and the structured
+      data &mdash; so a corrected DOI cannot survive in one place and not another.</p></dd></div>
+    <div><dt>Markup that machines read</dt>
+      <dd><p>Each publication page carries Highwire Press <span class="data">citation_*</span> meta
+      tags, which is what Google Scholar indexes, alongside <span class="data">ScholarlyArticle</span>,
+      <span class="data">Person</span> and <span class="data">BreadcrumbList</span> JSON-LD. Crawler
+      access, the sitemap and canonical URLs are generated from the same build.</p></dd></div>
+    <div><dt>A design system, not a template</dt>
+      <dd><p>The typography, colour and layout are hand-written CSS with a light and a dark theme,
+      built for long-form technical reading: tables that scroll inside their figure rather than
+      breaking the page, and copyable values such as DOIs that wrap instead of forcing a sideways
+      scroll. Every page is checked in a real browser at a 320px viewport.</p></dd></div>
+    <div><dt>Nothing that phones home</dt>
+      <dd><p>No analytics, no cookies, no third-party scripts and no tag manager. The only outside
+      request a page makes is for the web font. The behaviour that exists &mdash; theme switching,
+      the menu, copy-to-clipboard &mdash; is a single file of plain JavaScript.</p></dd></div>
+  </dl>
+</div></section>
+
+<section class="sec sec--sunk"><div class="wrap">
+  <h2 style="font-size:var(--t-xl);margin-bottom:var(--s5)">How it is put together</h2>
+  <dl class="dl">
+    <dt>Output</dt><dd style="font-family:var(--sans);font-size:var(--t-sm)">Static HTML, written to the repository root and served as files</dd>
+    <dt>Generator</dt><dd style="font-family:var(--sans);font-size:var(--t-sm)">Python 3 standard library only &mdash; no packages to install, nothing to keep patched</dd>
+    <dt>Styling</dt><dd style="font-family:var(--sans);font-size:var(--t-sm)">Hand-written CSS, custom properties, light and dark themes</dd>
+    <dt>Behaviour</dt><dd style="font-family:var(--sans);font-size:var(--t-sm)">One file of plain JavaScript, loaded deferred</dd>
+    <dt>Typeface</dt><dd style="font-family:var(--sans);font-size:var(--t-sm)">IBM Plex Sans and IBM Plex Mono</dd>
+    <dt>Hosting</dt><dd style="font-family:var(--sans);font-size:var(--t-sm)">GitHub Pages, on the custom domain emanahmed.org</dd>
+    <dt>Built by</dt><dd><a href="{WEBOCTALS}" rel="noopener">weboctals.com</a></dd>
+  </dl>
+  <p style="color:var(--ink-3);font-size:var(--t-sm);margin-top:var(--s5)">A page's
+  <span class="data">dateModified</span> is the date its content last changed, not the date of the last
+  build. Rebuilding the site does not make a page look fresher than it is.</p>
+</div></section>
+
+<section class="sec"><div class="wrap"><div class="call">
+  <h2>Work with WebOctals</h2>
+  <p>WebOctals designs and builds this kind of site: fast, accessible, machine-readable and maintainable
+  by the person whose name is on it. If you need something similar, start at their site.</p>
+  <div class="call__acts">
+    <a class="btn btn--solid" href="{WEBOCTALS}" rel="noopener">{ico("ext")}Visit WebOctals.com</a>
+    <a class="btn btn--line" href="index.html">{ico("pin")}Back to the site</a>
+  </div>
+</div></div></section>
+</main>'''
+    write("weboctals.html", head("Built by WebOctals | emanahmed.org colophon",
+                                 desc, "weboctals.html", ld) + body + foot())
+    PAGES.append(("weboctals.html", TODAY, "0.3", "yearly"))
+
+# --------------------------------------------------------------------------
 # 404
 # --------------------------------------------------------------------------
 def build_404():
@@ -1671,7 +1769,7 @@ def build_deep_pages():
 def main():
     build_home(); build_research(); build_deep_pages(); build_publications(); build_pub_pages()
     build_notes_index(); build_note_pages(); build_cv(); build_teaching()
-    build_lab(); build_contact(); build_404()
+    build_lab(); build_contact(); build_weboctals(); build_404()
     build_robots(); build_sitemap()
     print(f"built {len(PAGES)} indexable pages + 404, robots.txt, sitemap.xml")
     for loc, *_ in PAGES: print("  /" + loc)
