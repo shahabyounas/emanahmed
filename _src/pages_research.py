@@ -1,39 +1,30 @@
 # -*- coding: utf-8 -*-
-"""Deep research pages. Each figure's numbers trace to the cited paper."""
-import viz
-from viz import figure, table, legend_items, dotplot_log, barh, dotmatrix, linechart
+"""Deep research pages.
+
+Only values stated in the published papers appear here. Nothing on these pages
+is simulated, illustrative or reconstructed: if a number is shown, it was
+printed in the paper it is attributed to. Tables, not charts -- a plot of three
+cherry-picked values, or of quantities that are not comparable, says less than
+the numbers themselves.
+"""
+from viz import figure, table
 
 # =========================================================================
 # 1. Machine learning for biomaterials  (Tissue Engineering Part A, 2024)
 # =========================================================================
 
 DATASETS = [
-    ("Scaffold study", 182, "13 polymers, 182 scaffolds tested"),
-    ("Titanium nanotube analysis", 272, "272 labelled samples, 30 publications"),
-    ("Kohn polyacrylate library", 112, "112 distinct degradable polymers"),
-    ("Lipid nanoparticle screen", 1080, "1,080-LNP formulation library"),
-    ("Poly(β-amino ester) library", 2500, "~2,500 degradable PAEs for gene delivery"),
-    ("Drug–excipient space", 2_100_000, "2.1 million possible pairings"),
+    ("Scaffold study", "182 scaffolds", "13 polymers, 182 scaffolds tested"),
+    ("Titanium nanotube analysis", "272 samples", "272 labelled samples drawn from 30 publications"),
+    ("Kohn polyacrylate library", "112 polymers", "112 distinct degradable polymers"),
+    ("Lipid nanoparticle screen", "1,080 formulations", "1,080-LNP formulation library"),
+    ("Poly(β-amino ester) library", "~2,500 polymers", "degradable PAEs for gene delivery"),
 ]
-
-ALGOS = ["Random forest", "Support vector machine", "Neural network",
-         "Gradient boosting", "Gaussian regression", "Hidden Markov model", "Active learning"]
-DOMAINS = ["Tissue engineering", "Gene delivery", "Drug delivery",
-           "Protein stabilization", "Antifouling materials", "Data mining"]
-USE = {
-    (0, 0): 1, (0, 5): 1, (0, 4): 1,
-    (1, 0): 1, (1, 4): 1,
-    (2, 2): 1, (2, 1): 1,
-    (3, 1): 1,
-    (4, 0): 1, (4, 2): 1,
-    (5, 3): 1,
-    (6, 3): 1, (6, 2): 1,
-}
 
 DESCRIPTORS = [
     ("Structural", "Fibre diameter, pore diameter, porosity, pore size"),
     ("Mechanical", "Young's modulus, compressive strength"),
-    ("Thermal", "Glass transition temperature (Tₘ)"),
+    ("Thermal", "Glass transition temperature"),
     ("Surface", "Contact angle, roughness, hydrophobicity, wettability"),
     ("Compositional", "Monomer ratios, pendant groups, backbone modifications"),
     ("Molecular", "Cheminformatic descriptors (e.g. PaDEL) for lipids and small molecules"),
@@ -41,42 +32,14 @@ DESCRIPTORS = [
 
 
 def ml_figures():
-    rows = sorted(DATASETS, key=lambda r: r[1])
     f1 = figure(
         "fig-datasets",
         "How big is a high-throughput biomaterials dataset?",
-        "Study sizes cited in the review, on a logarithmic axis. Four orders of magnitude "
-        "separate a careful polymer library from the combinatorial space it samples.",
-        dotplot_log([(r[0], r[1], r[2]) for r in rows],
-                    xlabel="Number of distinct formulations or samples (log scale)",
-                    title="Dataset sizes in high-throughput biomaterials studies",
-                    desc="Dot plot on a log axis. Scaffold study 182, titanium nanotube analysis 272, "
-                         "Kohn polyacrylate library 112, lipid nanoparticle screen 1080, "
-                         "poly(beta-amino ester) library 2500, drug-excipient space 2.1 million.",
-                    highlight=len(rows) - 1),
-        table(["Study", "Size", "Description"],
-              [(r[0], viz.fmt(r[1]), r[2]) for r in rows]),
-        "reported",
+        "Study sizes cited in the review. A carefully built experimental library runs to hundreds or "
+        "a few thousand members, which is what the modelling has to work with.",
+        "", table(["Study", "Size", "Description"], DATASETS), "reported",
         "Study sizes as cited in Ahmed <em>et al.</em>, <em>Tissue Engineering Part A</em> 30(19–20), "
-        "662–680 (2024). A dot plot is used rather than bars because a bar length on a log axis "
-        "misrepresents ratio.",
-        note="The gap is the argument. Experimental libraries reach a few thousand members; the spaces "
-             "they are drawn from run to millions. Nothing exhaustive is possible here, so the question "
-             "becomes which few thousand to make, which is a modelling problem, not a pipetting one.")
-
-    f2 = figure(
-        "fig-algorithms",
-        "Which methods are being used where",
-        "The pairings of algorithm and application area discussed in the review.",
-        dotmatrix(DOMAINS, ALGOS, USE,
-                  title="Machine learning methods by biomaterials application area",
-                  desc="Dot matrix pairing seven algorithms with six application areas."),
-        table(["Method", "Application areas discussed"],
-              [(a, ", ".join(DOMAINS[j] for j in range(len(DOMAINS)) if USE.get((i, j))) or "None")
-               for i, a in enumerate(ALGOS)]),
-        "reported",
-        "Pairings as discussed in the review. A filled dot means the review covers that method in that "
-        "area; an empty position is not a claim that the combination is unused.")
+        "662–680 (2024).")
 
     f3 = figure(
         "fig-descriptors",
@@ -85,7 +48,7 @@ def ml_figures():
         "that choice bounds what the model can possibly learn.",
         "", table(["Descriptor family", "Examples"], DESCRIPTORS), "reported",
         "Descriptor families as surveyed in the review.")
-    return f1, f2, f3
+    return f1, f3
 
 
 # =========================================================================
@@ -100,9 +63,9 @@ MONOMERS = [
 ]
 
 DISPERSITY = [
-    ("Acrylates, optimised", 1.15, "--v1", "best reported condition"),
-    ("Acrylates, well-controlled", 1.30, "--v1", "reported upper bound, Đ < 1.3"),
-    ("MMA with PMDETA + BPN", 1.26, "--v2", "at target specifications"),
+    ("Acrylates, optimised", "1.15", "best reported condition"),
+    ("Acrylates, well-controlled", "< 1.30", "reported upper bound across the acrylate screen"),
+    ("MMA with PMDETA + BPN", "1.26", "at target specifications"),
 ]
 
 CONDITIONS = [
@@ -118,9 +81,7 @@ CONDITIONS = [
     ("Initiators screened", "MBiB, BPN"),
 ]
 
-REAGENT_COLS = ["Me₆TREN + MBiB", "PMDETA + BPN"]
-REAGENT_ROWS = [m[1] for m in MONOMERS]
-REAGENT_USE = {(0, 0): 1, (1, 0): 1, (2, 0): 1, (3, 1): 1}
+PAIRING = {"acrylate": "Me₆TREN + MBiB", "methacrylate": "PMDETA + BPN"}
 
 
 def atrp_figures():
@@ -140,15 +101,8 @@ def atrp_figures():
         "Different monomers want different reagents",
         "The reagent pairing that gave good control, by monomer class. The same combination does not "
         "work across the board, which is the finding.",
-        dotmatrix(REAGENT_COLS, REAGENT_ROWS, REAGENT_USE,
-                  title="Best-performing ligand and initiator pairing by monomer",
-                  desc="Acrylates HEA, MA and HPA pair with Me6TREN and MBiB; "
-                       "methyl methacrylate pairs with PMDETA and BPN."),
-        table(["Monomer", "Class", "Reported best pairing"],
-              [(f"{n} ({a})", c,
-                REAGENT_COLS[0] if c == "acrylate" else REAGENT_COLS[1])
-               for n, a, c in MONOMERS]),
-        "reported",
+        "", table(["Monomer", "Class", "Reported best pairing"],
+                  [(f"{n} ({a})", c, PAIRING[c]) for n, a, c in MONOMERS]), "reported",
         "As reported in the paper: Me₆TREN consistently produced high dispersity with MMA, while "
         "PMDETA and BPN emerged as the most suitable reagents for high-throughput MMA synthesis.",
         note="Methyl methacrylate propagates more slowly than the acrylates, so the activation–"
@@ -159,30 +113,17 @@ def atrp_figures():
     f3 = figure(
         "fig-dispersity",
         "Dispersity, reported",
-        "Đ = Mᵥ/Mₙ. A perfectly uniform chain population would be 1.00; below about 1.3 is "
+        "Đ = M𝓌/Mₙ. A perfectly uniform chain population would be 1.00; below about 1.3 is "
         "normally taken as well-controlled.",
-        barh(DISPERSITY, xlabel="Dispersity (Đ)", xdom=(1.0, 1.4),
-             ref={"x": 1.0, "label": "Đ = 1.00, perfectly uniform"},
-             xfmt=lambda v: f"{v:.2f}",
-             title="Reported dispersity values",
-             desc="Acrylates optimised 1.15, acrylates well-controlled upper bound 1.30, "
-                  "MMA with PMDETA and BPN 1.26."),
-        table(["Condition", "Đ", "Note"], [(r[0], f"{r[1]:.2f}", r[3]) for r in DISPERSITY]),
-        "reported",
-        "Only values stated in the paper are plotted. This is not the full screen. For the complete "
-        "dataset see the publication.",
-        legend=legend_items([("--v1", "Acrylates"), ("--v2", "Methacrylate (MMA)")]))
+        "", table(["Condition", "Đ", "Note"], DISPERSITY), "reported",
+        "Only values stated in the paper are listed. This is not the full screen. For the complete "
+        "dataset see the publication.")
     return f1, f2, f3
 
 
 # =========================================================================
 # 3. SAXS + machine learning  (Biophysical Journal, 2025)
 # =========================================================================
-
-import math, sas
-from viz import tolerance_strip, mlp_diagram, detector
-
-SHAPES = [("globular", "--v1"), ("elongated", "--v2"), ("two-domain", "--v3")]
 
 MODEL = [
     ("Training profiles", "1,940", "experimental files from the SASBDB"),
@@ -205,183 +146,52 @@ HYPER = [
     ("Detectors", "Pilatus 1M (SAXS), Pilatus 900K (WAXS)"),
 ]
 
+OUTPUTS = [
+    ("Guinier Rg", "Radius of gyration from the low-q straight-line fit"),
+    ("PDDF Rg", "Radius of gyration from the pair distance distribution"),
+    ("Dmax", "Maximum particle dimension, from the PDDF and from the trained model"),
+    ("Kratky features", "Shape-descriptive features used by the clustering step"),
+    ("Confidence flag", "Whether the two Rg routes agree well enough to report the result"),
+]
+
 
 def saxs_figures():
-    D = sas.compute_all()
-    g = D["globular"]
+    f_out = figure(
+        "fig-outputs",
+        "What the pipeline returns for each profile",
+        "The tool extracts the same set of parameters for every dataset, which is what makes a "
+        "batch of profiles comparable rather than a set of individual judgement calls.",
+        "", table(["Output", "What it is"], OUTPUTS), "reported",
+        "Outputs as described in Ramirez, Di Mare, Byrnes, Ahmed <em>et al.</em>, "
+        "<em>Biophysical Journal</em> 124(21), 3772–3786 (2025).")
 
-    # -- Guinier ----------------------------------------------------------
-    q2lim = 0.016
-
-    def near(pts, xt):
-        """index of the point closest to a target x -- log-spaced q makes index
-        fractions meaningless for label placement."""
-        return min(range(len(pts)), key=lambda k: abs(pts[k][0] - xt))
-
-    gp, ga = [], []
-    for q, i in zip(g["q"], g["i"]):
-        if q * q > q2lim: break
-        gp.append((q * q, math.log(i)))
-        ga.append((q * q, -q * q * g["rg"] ** 2 / 3))
-    gi_lbl, ga_lbl = near(gp, 0.0132), near(ga, 0.0112)
-    f_guinier = figure(
-        "fig-guinier",
-        "Guinier: where the straight line stops being straight",
-        "Plot ln I(q) against q² and the low-q data falls on a line whose slope is −Rg²/3. "
-        "The approximation only holds while q·Rg stays small, and choosing where to cut it is one of "
-        "the judgement calls the pipeline has to make explicit.",
-        linechart(
-            [{"name": "Computed I(q)", "pts": gp, "var": "--v1",
-              "label_at": gi_lbl, "anchor": "end", "label_dy": 24},
-             {"name": "Guinier approximation", "pts": ga, "var": "--v2", "dash": True,
-              "label_at": ga_lbl, "anchor": "end", "label_dy": -17}],
-            xlabel="q² (Å⁻²)", ylabel="ln I(q) / I(0)",
-            xdom=(0, q2lim),
-            xfmt=lambda v: f"{v:.3f}",
-            yfmt=lambda v: f"{v:.1f}",
-            marks=[{"type": "vline", "x": g["q2max"],
-                    "label": f"q²max = 1.5/Rg² = {g['q2max']:.4f}"}],
-            title="Guinier plot for a computed globular scatterer",
-            desc="Log intensity against q squared. The computed curve and the Guinier straight-line "
-                 "approximation agree below the marked limit and diverge above it."),
-        table(["Quantity", "Value"],
-              [("Model body", "Sphere, R = 30 Å"),
-               ("Rg from p(r)", f"{g['rg']:.2f} Å"),
-               ("Exact Rg = R√(3/5)", f"{30*math.sqrt(0.6):.2f} Å"),
-               ("Guinier limit q²max = 1.5/Rg²", f"{g['q2max']:.5f} Å⁻²"),
-               ("Equivalent q·Rg", f"{math.sqrt(1.5):.2f}")]),
-        "computed",
-        "Computed for this page from the Debye relation, not measured. The q²max = 1.5/Rg² limit "
-        "is the criterion used in the paper. The recovered Rg matches the exact value for a sphere "
-        f"({g['rg']:.2f} Å against {30*math.sqrt(0.6):.2f} Å), which is the check that the "
-        "calculation is right.",
-        legend=legend_items([("--v1", "Computed I(q)"), ("--v2", "Guinier approximation")]))
-
-    # -- Kratky -----------------------------------------------------------
-    ks = []
-    for name, var in SHAPES:
-        d = D[name]
-        pts = [(q, 1000 * q * q * i) for q, i in zip(d["q"], d["i"]) if q >= 0.01]
-        ks.append({"name": name.replace("-", "‑"), "pts": pts, "var": var,
-                   "label_at": max(range(len(pts)), key=lambda k: pts[k][1])})
-    f_kratky = figure(
-        "fig-kratky",
-        "Kratky: shape, read off the curve",
-        "q²I(q) against q. A compact body gives a clear peak that falls away; as a particle becomes "
-        "elongated or splits into domains the curve broadens and the decay softens. This is the plot the "
-        "clustering step turns from an impression into a probability.",
-        linechart(ks, xlabel="q (Å⁻¹)", ylabel="q² I(q) / I(0),  × 10⁻³",
-                  xfmt=lambda v: f"{v:g}", yfmt=lambda v: f"{v:.3f}",
-                  title="Kratky plots for three computed bodies",
-                  desc="Kratky plots for a globular sphere, an elongated prolate ellipsoid and a "
-                       "two-domain dumbbell, all computed from geometry."),
-        table(["Body", "Rg (Å)", "Dmax (Å)", "Dmax / Rg"],
-              [(sas.BODIES[n][2], f"{D[n]['rg']:.1f}", f"{D[n]['dmax']:.0f}",
-                f"{D[n]['dmax']/D[n]['rg']:.2f}") for n, _ in SHAPES]),
-        "computed",
-        "All three curves come from one calculation per body: Monte-Carlo p(r), then I(q) by the Debye "
-        "relation. Because Rg and Dmax are derived from the same p(r), the three figures on "
-        "this page are mutually consistent the way a real measurement would be.",
-        legend=legend_items([(v, sas.BODIES[n][2]) for n, v in SHAPES]),
-        note=f"Note the ratio Dmax/Rg in the table: {D['globular']['dmax']/D['globular']['rg']:.2f} for the "
-             f"sphere, against the exact value of {math.sqrt(5/3)*2:.2f} for a solid sphere. Elongation "
-             f"pushes it to {D['elongated']['dmax']/D['elongated']['rg']:.2f}. That single ratio carries "
-             "much of what the shape classification is picking up on.")
-
-    # -- P(r) -------------------------------------------------------------
-    ps = []
-    # Every curve peaks near 1.0, so labelling each at its own maximum stacks all
-    # three labels on top of one another. Separate them along r instead.
-    label_r = {"globular": 20.0, "elongated": 88.0, "two-domain": 64.0}
-    for name, var in SHAPES:
-        d = D[name]
-        pts = list(zip(d["r"], d["p"]))
-        li = min(range(len(pts)), key=lambda k: abs(pts[k][0] - label_r[name]))
-        ps.append({"name": name.replace("-", "‑"), "pts": pts, "var": var,
-                   "label_at": li, "anchor": "middle", "label_dy": -13})
-    f_pr = figure(
-        "fig-pr",
-        "P(r): the histogram of distances inside the particle",
-        "Every pair of points in the body contributes one distance. The longest of them is "
-        "Dmax, and estimating it reliably from noisy data is the step the model was trained to "
-        "assist with.",
-        linechart(ps, xlabel="r (Å)", ylabel="p(r), normalised",
-                  xfmt=lambda v: f"{v:g}", yfmt=lambda v: f"{v:.1f}",
-                  marks=[{"type": "vline", "x": D[n]["dmax"],
-                          "label": f"Dmax {D[n]['dmax']:.0f} Å"} for n, _ in SHAPES],
-                  title="Pair distance distributions for three computed bodies",
-                  desc="Pair distance distribution functions. The sphere is symmetric; the elongated "
-                       "body has a long tail; the two-domain body is bimodal."),
-        table(["Body", "Shape of p(r)", "Dmax (Å)"],
-              [(sas.BODIES["globular"][2], "Single symmetric peak", f"{D['globular']['dmax']:.0f}"),
-               (sas.BODIES["elongated"][2], "Skewed, long tail to high r", f"{D['elongated']['dmax']:.0f}"),
-               (sas.BODIES["two-domain"][2], "Bimodal: within-domain then between-domain",
-                f"{D['two-domain']['dmax']:.0f}")]),
-        "computed",
-        f"Monte-Carlo sampled from the geometry of each body, {sas.N_PAIRS:,} point pairs per body, "
-        "fixed seed, smoothed with three passes of a 3-point kernel.",
-        legend=legend_items([(v, sas.BODIES[n][2]) for n, v in SHAPES]))
-
-    # -- decision rule ----------------------------------------------------
     f_tol = figure(
         "fig-tolerance",
         "The rule that lets the pipeline decline to answer",
         "The model's predicted Dmax is compared against the value from the BIFT fit. Agree "
         "within 20% and it is reported in green; disagree by more and it is shown in red rather than "
         "quietly returned.",
-        tolerance_strip(title="Dmax agreement tolerance",
-                        desc="A deviation axis from minus 45 to plus 45 percent. The central plus or "
-                             "minus 20 percent band is accepted; outside it, predictions are flagged."),
-        table(["Deviation from BIFT Dmax", "Outcome"],
-              [("Within ±20%", "Accepted, shown green"),
-               ("More than ±20%", "Flagged as low confidence, shown red")]),
-        "reported",
+        "", table(["Deviation from BIFT Dmax", "Outcome"],
+                  [("Within ±20%", "Accepted, shown green"),
+                   ("More than ±20%", "Flagged as low confidence, shown red")]), "reported",
         "The ±20% threshold and the red/green reporting are as described in the paper.",
         note="This is the part worth copying. An automated analysis that always returns a "
              "plausible-looking number is worse than none; the useful property is knowing when to stop.")
 
-    # -- MLP --------------------------------------------------------------
     f_mlp = figure(
         "fig-mlp",
         "The regressor",
         "A small, deliberately unglamorous network: four hidden layers of 32 units, trained only on "
         "experimental profiles so that it learns how practitioners actually make this call.",
-        mlp_diagram(title="Multilayer perceptron architecture",
-                    desc="Input features feed four hidden layers of 32 units each, ending in a single "
-                         "output predicting maximum particle dimension."),
-        table(["Hyperparameter", "Value"], HYPER),
-        "reported",
+        "", table(["Hyperparameter", "Value"], HYPER), "reported",
         "Architecture and hyperparameters as published.")
 
-    # -- detector ---------------------------------------------------------
-    pr = sas.pair_distribution("globular")
-    q, i = sas.profile(pr, qmin=0.01, qmax=0.62, n=260)
-    f_det = figure(
-        "fig-detector",
-        "What the detector actually sees",
-        "Particles tumbling freely in solution scatter isotropically, so the two-dimensional pattern is a "
-        "set of concentric rings. The dark bands are not noise. They are the minima of the particle's "
-        "form factor, and their spacing is what encodes its size.",
-        f'<div class="det">{detector(q, i, title="Simulated solution-scattering detector image", desc="Concentric rings of varying intensity around a central beamstop, computed from the scattering profile of a 30 angstrom sphere.")}</div>',
-        table(["Feature", "Meaning"],
-              [("Central disc", "Beamstop: the direct beam is blocked"),
-               ("Radius", "Increasing q, so decreasing length scale"),
-               ("Bright rings", "Maxima of the form factor"),
-               ("Dark rings", "Minima: their positions fix the particle radius"),
-               ("First minimum", "q ≈ 4.493 / R for a sphere")]),
-        "computed",
-        "Rendered from the same computed I(q) as the curves above, for a 30 Å sphere. The ring "
-        "positions are the real form-factor minima, not decoration.")
-
-    return f_guinier, f_kratky, f_pr, f_det, f_tol, f_mlp, MODEL
+    return f_out, f_tol, f_mlp, MODEL
 
 
 # =========================================================================
 # 4. Polymer-stabilized enzymes  (doctoral work, in preparation)
 # =========================================================================
-
-from viz import flow
-from math import comb
 
 WORKFLOW = [
     ("Synthesise copolymer library", "photo-ATRP, one plate"),
@@ -394,41 +204,10 @@ WORKFLOW = [
 
 
 def enzyme_figures():
-    # Combinatorics of a modest copolymer design space -- plain arithmetic.
-    n_mon, pick, steps, lengths = 6, 3, 10, 4
-    blends = comb(n_mon, pick)                 # which monomers
-    comps = comb(steps - 1, pick - 1)          # compositions in 10% increments
-    space = blends * comps * lengths
-    rows = [
-        ("Monomers available", f"{n_mon}", "an illustrative palette"),
-        ("Monomers per copolymer", f"{pick}", "terpolymers"),
-        ("Distinct monomer sets", f"{blends}", f"C({n_mon},{pick})"),
-        ("Compositions per set", f"{comps}", "10% increments summing to 100%"),
-        ("Chain-length targets", f"{lengths}", "degree of polymerisation"),
-        ("Total distinct polymers", f"{space:,}", f"{blends} × {comps} × {lengths}"),
-        ("Plates required", f"{space / 96:.0f}", "at 96 formulations per plate"),
-    ]
-    f1 = figure(
-        "fig-space",
-        "Why this has to be run in parallel",
-        "A deliberately conservative design space: six monomers, three per polymer, composition in "
-        "10% steps, four chain lengths, and it is already past what anyone screens by hand.",
-        "", table(["Quantity", "Value", "How"], rows), "computed",
-        "Plain combinatorial arithmetic for an illustrative palette, not a description of a specific "
-        "screen. The point is the order of magnitude.",
-        note=f"{space:,} polymers is about {space/96:.0f} plates. At one hand-run reaction per hour it is "
-             "years of benchwork; on an automated platform it is a manageable campaign. And the real space "
-             "is larger, because composition does not come in tidy 10% steps.")
-
-    f2 = figure(
+    return (figure(
         "fig-workflow",
         "The assay, end to end",
         "Each step has to survive being done ninety-six times in parallel without the numbers drifting.",
-        flow(WORKFLOW, title="Polymer-stabilized enzyme screening workflow",
-             desc="Six steps: synthesise copolymer library, add enzyme, transfer to organic solvent, "
-                  "read solubility, read retained activity, model structure-function."),
-        table(["Step", "Stage", "Detail"],
-              [(str(i + 1), s, sub) for i, (s, sub) in enumerate(WORKFLOW)]),
-        "schematic",
-        "A diagram of the approach. Results from this work are in preparation and are not shown here.")
-    return f1, f2
+        "", table(["Step", "Stage", "Detail"],
+                  [(str(i + 1), s, sub) for i, (s, sub) in enumerate(WORKFLOW)]), "schematic",
+        "A description of the approach. This work is in preparation; no results are shown."),)

@@ -80,56 +80,6 @@
     });
   }
 
-  /* --- Chart hover layer ------------------------------------------------ */
-  /* Marks carry a native <svg:title>, which already works with no JS and for
-     screen readers. This replaces the slow native tooltip with a styled one and
-     leaves the title element in place as the fallback. */
-  var tip;
-  function ensureTip() {
-    if (!tip) {
-      tip = document.createElement("div");
-      tip.className = "viztip";
-      tip.setAttribute("role", "presentation");
-      document.body.appendChild(tip);
-    }
-    return tip;
-  }
-
-  function markTitle(el) {
-    var t = el.querySelector("title");
-    return t ? t.textContent : null;
-  }
-
-  document.addEventListener("pointerover", function (e) {
-    var el = e.target.closest && e.target.closest(".viz [data-tip], .viz circle, .viz rect");
-    if (!el || !el.closest(".viz")) return;
-    var text = el.getAttribute("data-tip") || markTitle(el);
-    if (!text) return;
-    var t = ensureTip();
-    t.textContent = text;
-    t.setAttribute("data-show", "true");
-    var r = el.getBoundingClientRect();
-    var x = r.left + r.width / 2 + window.scrollX;
-    var y = r.top + window.scrollY;
-    t.style.left = "0px";
-    t.style.top = "0px";
-    var tw = t.offsetWidth, th = t.offsetHeight, pad = 8;
-    x = Math.min(Math.max(x - tw / 2, pad + window.scrollX),
-                 window.scrollX + document.documentElement.clientWidth - tw - pad);
-    t.style.left = x + "px";
-    t.style.top = (y - th - 10) + "px";
-  });
-
-  document.addEventListener("pointerout", function (e) {
-    if (!tip) return;
-    var el = e.target.closest && e.target.closest(".viz");
-    if (el) tip.setAttribute("data-show", "false");
-  });
-
-  window.addEventListener("scroll", function () {
-    if (tip) tip.setAttribute("data-show", "false");
-  }, { passive: true });
-
   document.addEventListener("click", function (e) {
     var btn = e.target.closest("[data-copy]");
     if (!btn) return;

@@ -16,8 +16,7 @@ Edit the source and rebuild:
 | Research areas, methods list | `_src/data.py` → `AREAS`, `METHODS` |
 | Research notes (articles) | `_src/notes.py` |
 | Deep research pages and their figures | `_src/pages_research.py` |
-| Chart renderers (SVG) | `_src/viz.py` |
-| Scattering physics behind the SAXS figures | `_src/sas.py` |
+| Figure and table shell | `_src/viz.py` |
 | Page structure, SEO tags, structured data | `_src/build.py` |
 | Visual design | `css/styles.css` (handwritten, not generated) |
 | Behaviour (theme, menu, copy buttons) | `js/main.js` (handwritten) |
@@ -55,28 +54,20 @@ python3 -m http.server 8777    # then open http://localhost:8777
 
 ## Figures
 
-Charts are rendered to inline SVG **at build time**, not drawn by JavaScript, so
-they are readable by crawlers and answer engines, visible with JS off, and cause
-no layout shift. Three rules hold for every figure:
+Every figure on the site is a **table of values published in one of the three
+papers**, rendered into the HTML at build time. Two rules:
 
-1. **A provenance badge.** `Reported` (published value), `Computed` (derived here
-   from theory), or `Schematic` (a diagram, not data). Never publish a figure
-   without one, and never present a computed curve as a measurement.
-2. **A data table.** Every figure ships a `<details>` table of its numbers. This
-   is the accessibility fallback, the mobile fallback, and what makes the values
-   machine-readable.
-3. **A validated palette.** The categorical slots `--v1`..`--v4` in
-   `css/styles.css` passed the all-pairs colour checks (lightness band, chroma
-   floor, colour-vision separation, normal-vision floor, contrast) against each
-   mode's own surface. **If you change them, re-run the validator** — do not pick
-   replacements by eye, and cap categorical series at four.
+1. **Nothing is simulated, illustrative or reconstructed.** If a number appears,
+   it was printed in the paper it is attributed to. The site used to draw
+   scattering curves computed from a made-up sphere, a log dot plot mixing
+   library sizes with hypothetical combinatorial spaces, and an animated
+   "pipeline" hero. None of that was data, and all of it is gone.
+2. **A provenance badge.** `Reported` (published value) or `Schematic` (a
+   description of a method, used only for the in-preparation doctoral
+   workflow). Never publish a figure without one.
 
-`_src/sas.py` computes small-angle scattering from real geometry: Monte-Carlo
-sampling of a body's pair distance distribution, then `I(q)` by the Debye
-relation. Guinier, Kratky, P(r), the detector images and the hero all come from
-that one calculation, so they agree with each other. Running `python3 _src/sas.py`
-prints the recovered Rg and Dmax; for a sphere these must match `R*sqrt(3/5)` and
-`2R`, which is the check that the maths is still right after any change.
+There are deliberately no chart renderers in `_src/viz.py`. If a future figure
+genuinely needs a plot, it needs real measured data behind it first.
 
 ## SEO / discovery notes
 
@@ -93,7 +84,8 @@ prints the recovered Rg and Dmax; for a sphere these must match `R*sqrt(3/5)` an
   this in a real browser. Two things break it in practice: a `<pre>` or long token
   that cannot wrap, and a grid item keeping its default `min-width: auto`, which
   lets one unbreakable child (a DOI is ~290px) size the whole column. DOIs and
-  other copyable values carry `class="data"`, which allows them to break.
+  other copyable values carry `class="data"`, which allows them to break. Wide
+  tables scroll inside `.fig__tablewrap`.
 - Known, unfixed: below ~300px the header rail needs 297px for the wordmark, the
   "Rutgers BME" sub-label and the two buttons, so it overflows on a 280px screen
   (Galaxy Fold cover display). Hiding the sub-label under 320px would fix it.

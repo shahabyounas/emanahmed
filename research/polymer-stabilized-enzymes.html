@@ -34,7 +34,7 @@
 <link rel="stylesheet" href="../css/styles.css">
 <script>try{var t=localStorage.getItem("theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home"},{"@type":"ListItem","position":2,"name":"Research","item":"https://emanahmed.org/research.html"},{"@type":"ListItem","position":3,"name":"Keeping enzymes working outside water","item":"https://emanahmed.org/research/polymer-stabilized-enzymes.html"}]}</script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","@id":"https://emanahmed.org/research/polymer-stabilized-enzymes.html#page","headline":"Keeping enzymes working outside water","name":"Keeping enzymes working outside water","url":"https://emanahmed.org/research/polymer-stabilized-enzymes.html","description":"Doctoral work on random copolymers as synthetic chaperones for enzymes in water-miscible organic solvents, screened on an automated plate-based platform.","author":{"@id":"https://emanahmed.org/#eman-ahmed"},"inLanguage":"en","dateModified":"2026-09-18","about":{"@id":"https://emanahmed.org/#eman-ahmed"},"isAccessibleForFree":true,"mainEntityOfPage":{"@type":"WebPage","@id":"https://emanahmed.org/research/polymer-stabilized-enzymes.html"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","@id":"https://emanahmed.org/research/polymer-stabilized-enzymes.html#page","headline":"Keeping enzymes working outside water","name":"Keeping enzymes working outside water","url":"https://emanahmed.org/research/polymer-stabilized-enzymes.html","description":"Doctoral work on random copolymers as synthetic chaperones for enzymes in water-miscible organic solvents, screened on an automated plate-based platform.","author":{"@id":"https://emanahmed.org/#eman-ahmed"},"inLanguage":"en","dateModified":"2026-09-21","about":{"@id":"https://emanahmed.org/#eman-ahmed"},"isAccessibleForFree":true,"mainEntityOfPage":{"@type":"WebPage","@id":"https://emanahmed.org/research/polymer-stabilized-enzymes.html"}}</script>
 </head>
 <body><a class="skip" href="#main">Skip to content</a>
 <header class="rail">
@@ -62,39 +62,22 @@
 <section><div class="prose"><p>Enzymes are extraordinary catalysts in water and frequently useless outside it. Move one into a water-miscible organic solvent, often where the interesting synthetic chemistry happens, and it tends to unfold, aggregate and drop out of solution.</p><p>Random copolymers can act as synthetic chaperones, wrapping a protein in a shell whose chemistry is tunable monomer by monomer. The difficulty is that the relationship between that shell's composition and whether the enzyme survives is not obvious from first principles.</p></div>
 </section>
 <section>
-  <div class="prose"><h2>The space is too big to reason about</h2></div>
-  <figure class="fig" id="fig-space">
-  <figcaption class="fig__head">
-    <h3 class="fig__title">Why this has to be run in parallel</h3>
-    <p class="fig__sub">A deliberately conservative design space: six monomers, three per polymer, composition in 10% steps, four chain lengths, and it is already past what anyone screens by hand.</p>
-  </figcaption>
-  <div class="fig__plot"></div>
-  
-  <p class="fig__note">2,880 polymers is about 30 plates. At one hand-run reaction per hour it is years of benchwork; on an automated platform it is a manageable campaign. And the real space is larger, because composition does not come in tidy 10% steps.</p>
-  <details class="fig__data">
-    <summary>Show the numbers</summary>
-    <div class="fig__tablewrap"><table class="fig__table"><thead><tr><th scope="col">Quantity</th><th scope="col">Value</th><th scope="col">How</th></tr></thead><tbody><tr><th scope="row">Monomers available</th><td>6</td><td>an illustrative palette</td></tr><tr><th scope="row">Monomers per copolymer</th><td>3</td><td>terpolymers</td></tr><tr><th scope="row">Distinct monomer sets</th><td>20</td><td>C(6,3)</td></tr><tr><th scope="row">Compositions per set</th><td>36</td><td>10% increments summing to 100%</td></tr><tr><th scope="row">Chain-length targets</th><td>4</td><td>degree of polymerisation</td></tr><tr><th scope="row">Total distinct polymers</th><td>2,880</td><td>20 × 36 × 4</td></tr><tr><th scope="row">Plates required</th><td>30</td><td>at 96 formulations per plate</td></tr></tbody></table></div>
-  </details>
-  <p class="fig__prov"><span class="fig__badge fig__badge--computed">Computed</span>
-  Plain combinatorial arithmetic for an illustrative palette, not a description of a specific screen. The point is the order of magnitude.</p>
-</figure>
-</section>
-<section>
-  <div class="prose"><h2>How the screen runs</h2></div>
+  <div class="prose"><h2>How the screen runs</h2>
+  <p>Six monomers combined three at a time, in composition steps, at a handful of chain lengths is
+  already more distinct polymers than anyone screens by hand, and the real space does not come in
+  tidy steps. That is the reason the search runs in parallel rather than one rational design at a
+  time.</p></div>
   <figure class="fig" id="fig-workflow">
   <figcaption class="fig__head">
     <h3 class="fig__title">The assay, end to end</h3>
     <p class="fig__sub">Each step has to survive being done ninety-six times in parallel without the numbers drifting.</p>
   </figcaption>
-  <div class="fig__plot"><svg class="viz" viewBox="0 0 680 140" role="img" preserveAspectRatio="xMidYMid meet" aria-label="Polymer-stabilized enzyme screening workflow"><desc>Six steps: synthesise copolymer library, add enzyme, transfer to organic solvent, read solubility, read retained activity, model structure-function.</desc><rect class="flow__box" x="12.0" y="30" width="87.7" height="74" rx="4"/><text class="flow__n" x="22.0" y="50">1</text><text class="flow__lbl" x="55.8" y="68.0" text-anchor="middle">Synthesise</text><text class="flow__lbl" x="55.8" y="81.0" text-anchor="middle">copolymer</text><text class="flow__sub" x="55.8" y="96.0" text-anchor="middle">photo-ATRP, one plate</text><path class="flow__arrow" d="M105.7 67 L118.7 67 M114.7 63 L118.7 67 L114.7 71"/><rect class="flow__box" x="125.7" y="30" width="87.7" height="74" rx="4"/><text class="flow__n" x="135.7" y="50">2</text><text class="flow__lbl" x="169.5" y="68.0" text-anchor="middle">Add enzyme</text><text class="flow__sub" x="169.5" y="96.0" text-anchor="middle">form polymer–enzyme hybrid</text><path class="flow__arrow" d="M219.3 67 L232.3 67 M228.3 63 L232.3 67 L228.3 71"/><rect class="flow__box" x="239.3" y="30" width="87.7" height="74" rx="4"/><text class="flow__n" x="249.3" y="50">3</text><text class="flow__lbl" x="283.2" y="68.0" text-anchor="middle">Transfer to</text><text class="flow__lbl" x="283.2" y="81.0" text-anchor="middle">organic</text><text class="flow__sub" x="283.2" y="96.0" text-anchor="middle">water-miscible</text><path class="flow__arrow" d="M333.0 67 L346.0 67 M342.0 63 L346.0 67 L342.0 71"/><rect class="flow__box" x="353.0" y="30" width="87.7" height="74" rx="4"/><text class="flow__n" x="363.0" y="50">4</text><text class="flow__lbl" x="396.8" y="68.0" text-anchor="middle">Read</text><text class="flow__lbl" x="396.8" y="81.0" text-anchor="middle">solubility</text><text class="flow__sub" x="396.8" y="96.0" text-anchor="middle">plate reader</text><path class="flow__arrow" d="M446.7 67 L459.7 67 M455.7 63 L459.7 67 L455.7 71"/><rect class="flow__box" x="466.7" y="30" width="87.7" height="74" rx="4"/><text class="flow__n" x="476.7" y="50">5</text><text class="flow__lbl" x="510.5" y="68.0" text-anchor="middle">Read retained</text><text class="flow__lbl" x="510.5" y="81.0" text-anchor="middle">activity</text><text class="flow__sub" x="510.5" y="96.0" text-anchor="middle">enzyme assay</text><path class="flow__arrow" d="M560.3 67 L573.3 67 M569.3 63 L573.3 67 L569.3 71"/><rect class="flow__box" x="580.3" y="30" width="87.7" height="74" rx="4"/><text class="flow__n" x="590.3" y="50">6</text><text class="flow__lbl" x="624.2" y="68.0" text-anchor="middle">Model</text><text class="flow__lbl" x="624.2" y="81.0" text-anchor="middle">structure–function</text><text class="flow__sub" x="624.2" y="96.0" text-anchor="middle">on every well, including failures</text></svg></div>
   
   
-  <details class="fig__data">
-    <summary>Show the numbers</summary>
-    <div class="fig__tablewrap"><table class="fig__table"><thead><tr><th scope="col">Step</th><th scope="col">Stage</th><th scope="col">Detail</th></tr></thead><tbody><tr><th scope="row">1</th><td>Synthesise copolymer library</td><td>photo-ATRP, one plate</td></tr><tr><th scope="row">2</th><td>Add enzyme</td><td>form polymer–enzyme hybrid</td></tr><tr><th scope="row">3</th><td>Transfer to organic solvent</td><td>water-miscible</td></tr><tr><th scope="row">4</th><td>Read solubility</td><td>plate reader</td></tr><tr><th scope="row">5</th><td>Read retained activity</td><td>enzyme assay</td></tr><tr><th scope="row">6</th><td>Model structure–function</td><td>on every well, including failures</td></tr></tbody></table></div>
-  </details>
+  
+  <details class="fig__data" open><summary>The numbers</summary><div class="fig__tablewrap"><table class="fig__table"><thead><tr><th scope="col">Step</th><th scope="col">Stage</th><th scope="col">Detail</th></tr></thead><tbody><tr><th scope="row">1</th><td>Synthesise copolymer library</td><td>photo-ATRP, one plate</td></tr><tr><th scope="row">2</th><td>Add enzyme</td><td>form polymer–enzyme hybrid</td></tr><tr><th scope="row">3</th><td>Transfer to organic solvent</td><td>water-miscible</td></tr><tr><th scope="row">4</th><td>Read solubility</td><td>plate reader</td></tr><tr><th scope="row">5</th><td>Read retained activity</td><td>enzyme assay</td></tr><tr><th scope="row">6</th><td>Model structure–function</td><td>on every well, including failures</td></tr></tbody></table></div></details>
   <p class="fig__prov"><span class="fig__badge fig__badge--schematic">Schematic</span>
-  A diagram of the approach. Results from this work are in preparation and are not shown here.</p>
+  A description of the approach. This work is in preparation; no results are shown.</p>
 </figure>
   <div class="prose">
   <p>Two things make this work as a dataset rather than a set of experiments. Every well is measured
@@ -111,11 +94,11 @@
   <h2 style="font-size:var(--t-xl);margin:var(--s9) 0 0">Other research areas</h2>
   <nav class="pagenav"><a href="machine-learning-biomaterials.html"><span class="pagenav__k">Research area</span>
             <span class="pagenav__t">Machine learning for biomaterials</span>
-            <span class="pagenav__d">Which methods are used where, how big the datasets actually are, and why the published literature is the wrong thing to train on.</span></a><a href="automated-photo-atrp.html"><span class="pagenav__k">Research area</span>
+            <span class="pagenav__d">Which methods the review covers, how big the datasets actually are, and why the published literature is the wrong thing to train on.</span></a><a href="automated-photo-atrp.html"><span class="pagenav__k">Research area</span>
             <span class="pagenav__t">Automated photo-ATRP</span>
             <span class="pagenav__d">Why oxygen tolerance is the whole story, and what a ligand screen tells you that reasoning from first principles does not.</span></a><a href="saxs-machine-learning.html"><span class="pagenav__k">Research area</span>
             <span class="pagenav__t">SAXS and machine learning</span>
-            <span class="pagenav__d">Guinier, Kratky and P(r) computed from real geometry, and the rule that lets an automated pipeline refuse to answer.</span></a></nav>
+            <span class="pagenav__d">What the tool reports for every profile, the trained regressor behind it, and the rule that lets an automated pipeline refuse to answer.</span></a></nav>
 </div>
 </main><footer class="foot">
   <div class="wrap">

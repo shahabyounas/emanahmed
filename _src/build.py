@@ -18,7 +18,7 @@ sys.path.insert(0, HERE)
 from data import SITE, PROFILE, EXPERTISE, PUBLICATIONS, PUBLISHED, AREAS, METHODS
 from notes import NOTES
 import pages_research as PR
-from viz import figure, table, fmt, dotplot_log, detector
+from viz import figure, table
 
 TODAY = datetime.date.today().isoformat()
 
@@ -294,39 +294,6 @@ def crumbs_html(items, up=""):
     return '<nav class="crumb" aria-label="Breadcrumb">' + "".join(out) + "</nav>"
 
 # --------------------------------------------------------------------------
-# 96-well plate: the hero. Wells read out column by column.
-# --------------------------------------------------------------------------
-def plate_svg():
-    rnd = random.Random(1489)          # fixed seed: the plate is identical every build
-    PITCH, R, PADX, PADY = 27, 10.5, 22, 20
-    W = PADX + 12 * PITCH + 8
-    H = PADY + 8 * PITCH + 8
-    o = [f'<svg class="plate__svg" viewBox="0 0 {W} {H}" role="img" '
-         f'aria-labelledby="plate-t"><title id="plate-t">A 96-well plate reading out: '
-         f'signal rises across the columns, with four high-response wells highlighted.</title>']
-    for c in range(12):
-        o.append(f'<text class="plate__lbl" x="{PADX + R + c*PITCH}" y="12" text-anchor="middle">{c+1}</text>')
-    for r in range(8):
-        o.append(f'<text class="plate__lbl" x="10" y="{PADY + R + r*PITCH + 3}" text-anchor="middle">{"ABCDEFGH"[r]}</text>')
-    hits = {(2, 9), (5, 10), (3, 11), (6, 8)}
-    for r in range(8):
-        for c in range(12):
-            cx, cy = PADX + R + c * PITCH, PADY + R + r * PITCH
-            o.append(f'<circle class="plate__well" cx="{cx}" cy="{cy}" r="{R}"/>')
-            base = 0.10 + (c / 11) ** 1.5 * 0.72
-            val = max(0.05, min(0.95, base + rnd.uniform(-0.13, 0.13)))
-            hit = (r, c) in hits
-            if hit: val = 0.95
-            delay = c * 0.05 + r * 0.014
-            o.append(
-                f'<circle class="plate__read{" plate__read--hit" if hit else ""}" '
-                f'cx="{cx}" cy="{cy}" r="{R - 1.5}" '
-                f'style="--o:{val:.2f};animation-delay:{delay:.2f}s;'
-                f'transform-origin:{cx}px {cy}px"/>')
-    o.append("</svg>")
-    return "".join(o)
-
-# --------------------------------------------------------------------------
 # Shared fragments
 # --------------------------------------------------------------------------
 def authors_html(p):
@@ -409,11 +376,9 @@ def area_block(a, up=""):
     link = ""
     if a.get("deep"):
         link = (f'<p style="margin-bottom:0"><a class="btn btn--line btn--sm" '
-                f'href="{up}research/{a["deep"]}.html">In depth, with the data</a></p>')
-    thumb = f'<div class="th">{AREA_THUMB[a["id"]]()}</div>' if a["id"] in AREA_THUMB else ""
+                f'href="{up}research/{a["deep"]}.html">In depth</a></p>')
     return f'''<article class="area" id="{a["id"]}">
   <div>
-    {thumb}
     <h3 class="area__t">{a["title"]}</h3>
     <p class="data" style="color:var(--ink-3);font-size:var(--t-xs);margin:0">{a["lede"]}</p>
   </div>
@@ -447,25 +412,6 @@ def write(path, html):
         f.write(html.replace(MODTOKEN, mod))
     return path
 
-import sas as _sas
-from viz import thumb_plate, thumb_scale, thumb_rings, hero_pipeline, hero_pipeline_stacked
-
-_PR = _sas.pair_distribution("globular")
-_DQ, _DI = _sas.profile(_PR, qmin=0.01, qmax=0.62, n=140)
-_NP = _sas.pair_distribution('nanoparticle')
-# Radius maps q 0.028-0.215: the Guinier plateau sits behind the beamstop, as it
-# does on a real detector, so the visible plate is all form-factor oscillation.
-_HQ, _HI = _sas.profile(_NP, qmin=0.028, qmax=0.215, n=190)
-_TQ, _TI = _sas.profile(_NP, qmin=0.028, qmax=0.215, n=110)
-_GLOB = _sas.compute_all()["globular"]
-_KRATKY = [(a, 1000 * a * a * b) for a, b in zip(_GLOB["q"], _GLOB["i"]) if a >= 0.012]
-
-AREA_THUMB = {
-    "protein-stabilization": thumb_plate,
-    "machine-learning": thumb_scale,
-    "automation": lambda: thumb_rings(_TQ, _TI, _KRATKY),
-}
-
 PAGES = []   # (path, lastmod, priority, changefreq)
 
 # --------------------------------------------------------------------------
@@ -498,24 +444,6 @@ def build_home():
   <p class="note__d">{n["desc"]}</p></div>
 </article>''' for n in NOTES[:2])
 
-    rows = sorted(PR.DATASETS, key=lambda r: r[1])
-    gap = figure(
-        "fig-gap",
-        "What gets made, against what could be made",
-        "Study sizes from the biomaterials literature, on a logarithmic axis. The largest "
-        "hand-built polymer libraries stop a thousandfold short of the spaces they are sampling.",
-        dotplot_log([(r[0], r[1], r[2]) for r in rows],
-                    xlabel="Number of distinct formulations or samples (log scale)",
-                    title="Dataset sizes in high-throughput biomaterials studies",
-                    desc="Dot plot on a log axis, from 112 polymers to 2.1 million possible "
-                         "drug-excipient pairings.",
-                    highlight=len(rows) - 1),
-        table(["Study", "Size", "Description"], [(r[0], fmt(r[1]), r[2]) for r in rows]),
-        "reported",
-        'Study sizes as cited in Ahmed <em>et al.</em>, <em>Tissue Engineering Part A</em> '
-        '30(19&ndash;20), 662&ndash;680 (2024). '
-        '<a href="research/machine-learning-biomaterials.html">The full argument, with the methods.</a>')
-
     deeplinks = "".join(
         f'<a href="research/{d["slug"]}.html"><span class="pagenav__k">Research area</span>'
         f'<span class="pagenav__t">{d["nav"]}</span>'
@@ -541,14 +469,6 @@ def build_home():
       </div>
     </div>
 
-    <div class="hero__pipe hero__pipe--lg">{hero_pipeline(_HQ, _HI, _KRATKY)}</div>
-    <div class="hero__pipe hero__pipe--sm">{hero_pipeline_stacked(_HQ, _HI, _KRATKY)}</div>
-    <p class="hero__pipecap"><b>One turn of the loop.</b> Ninety-six polymer reactions run in parallel on
-    a single plate; each product is measured by solution scattering; a model reads the curves and picks
-    what goes on the next plate. The rings are the real form-factor minima of a 9&nbsp;nm particle,
-    computed from scattering physics rather than drawn:
-    <a href="research/saxs-machine-learning.html">the calculation is on the SAXS page</a>.</p>
-
     <div class="readout">
       <div><span class="readout__v">{M["papers"]}</span><span class="readout__k">peer-reviewed papers, one as first author</span></div>
       <div><span class="readout__v">{M["citations"]}</span><span class="readout__k">citations</span></div>
@@ -572,26 +492,15 @@ def build_home():
 <section class="sec">
   <div class="wrap">
     <div class="sec__head sec__head--split">
-      <h2>Why any of this needs a robot</h2>
-      <p>Not because throughput is impressive. Because the design space is large enough that choosing
-      what to make is the actual problem, and choosing well needs data that includes the failures.</p>
-    </div>
-    {gap}
-  </div>
-</section>
-
-<section class="sec sec--sunk">
-  <div class="wrap">
-    <div class="sec__head sec__head--split">
       <h2>In depth</h2>
-      <p>Four longer pieces with the figures: what each method does, the numbers behind it, and where
-      it stops working.</p>
+      <p>Four longer pieces on the methods: what each one does, the numbers reported in the papers,
+      and where it stops working.</p>
     </div>
     <nav class="pagenav">{deeplinks}</nav>
   </div>
 </section>
 
-<section class="sec">
+<section class="sec sec--sunk">
   <div class="wrap">
     <div class="sec__head sec__head--split">
       <h2>Publications</h2>
@@ -604,7 +513,7 @@ def build_home():
   </div>
 </section>
 
-<section class="sec sec--sunk">
+<section class="sec">
   <div class="wrap">
     <div class="sec__head sec__head--split">
       <h2>Research notes</h2>
@@ -616,7 +525,7 @@ def build_home():
   </div>
 </section>
 
-<section class="sec">
+<section class="sec sec--sunk">
   <div class="wrap">
     <div class="call">
       <h2>Working on something adjacent?</h2>
@@ -795,7 +704,7 @@ DEEP = [
          h1="Machine learning for biomaterials discovery",
          desc=("How high-throughput experimentation and machine learning map biomaterial "
                "structure-function behaviour: methods, dataset sizes and descriptors."),
-         card=("Which methods are used where, how big the datasets actually are, and why the "
+         card=("Which methods the review covers, how big the datasets actually are, and why the "
                "published literature is the wrong thing to train on."),
          source="mapping-biomaterial-complexity-machine-learning"),
     dict(slug="automated-photo-atrp",
@@ -811,10 +720,10 @@ DEEP = [
          nav="SAXS and machine learning",
          title="Automated SAXS Analysis with Machine Learning | Eman Ahmed",
          h1="Reading scattering curves at scale",
-         desc=("Guinier, Kratky and P(r) explained from computed scattering, plus the trained model "
-               "and confidence rule behind automated SAXS analysis."),
-         card=("Guinier, Kratky and P(r) computed from real geometry, and the rule that lets an "
-               "automated pipeline refuse to answer."),
+         desc=("What automated SAXS analysis reports for each profile, the model trained on 1,940 "
+               "experimental SASBDB profiles, and the rule that flags low-confidence results."),
+         card=("What the tool reports for every profile, the trained regressor behind it, and the "
+               "rule that lets an automated pipeline refuse to answer."),
          source="saxs-assistant-automated-saxs-analysis"),
     dict(slug="polymer-stabilized-enzymes",
          nav="Polymer-stabilized enzymes",
@@ -928,8 +837,8 @@ def build_research():
   <div class="wrap">
     <div class="sec__head sec__head--split">
       <h2>In depth</h2>
-      <p>Four longer pieces with the figures: what the methods do, the numbers behind them,
-      and where each one stops working.</p>
+      <p>Four longer pieces on the methods: what each one does, the numbers reported in the
+      papers, and where it stops working.</p>
     </div>
     <nav class="pagenav">{deeplinks}</nav>
   </div>
@@ -1270,8 +1179,7 @@ def build_teaching():
       <p class="tl__where">Rutgers School of Engineering &middot; undergraduate course</p>
       <ul><li>Led laboratory sessions and supported course instruction.</li>
       <li>Weekly office hours for students working through foundational material.</li>
-      <li>Assessed assignments and provided written feedback.</li>
-      <li>Course topics: biomechanics, biomaterials, medical devices, tissue engineering, biomedical imaging, bioethics.</li></ul>
+      <li>Assessed assignments and provided written feedback.</li></ul>
     </div>
     <div class="tl__item">
       <p class="tl__when">Ongoing</p>
@@ -1419,9 +1327,7 @@ def build_contact():
     <div>
       <div class="art__h">
         <h1>Get in touch</h1>
-        <p class="hero__lede" style="margin-bottom:0">Email is the reliable route. I read everything and
-        normally reply within a few working days. If a message needs data or a figure I do not have to
-        hand, it may take longer.</p>
+        <p class="hero__lede" style="margin-bottom:0">Email is the reliable route.</p>
       </div>
       <h2 style="font-size:var(--t-lg);margin-bottom:var(--s4)">Start an email</h2>
       <p style="color:var(--ink-2)">These open a draft with the subject filled in.</p>
@@ -1556,7 +1462,7 @@ def deep_prose(*paras):
 def deep_body(slug):
     """Returns (body_sections_html, extra_jsonld_mentions)."""
     if slug == "machine-learning-biomaterials":
-        f1, f2, f3 = PR.ml_figures()
+        f1, f3 = PR.ml_figures()
         return f'''
 <section>{deep_prose(
   "Biomaterials are difficult to design because performance rarely traces to a single property. "
@@ -1569,14 +1475,13 @@ def deep_body(slug):
   {f1}
 </section>
 <section>
-  <div class="prose"><h2>The methods, and where they are actually used</h2></div>
+  <div class="prose"><h2>Which method, and when</h2></div>
   {deep_prose(
   "There is no single algorithm for biomaterials. What gets used depends on how much data exists, "
   "whether the target is continuous or categorical, and whether the point is prediction or working "
   "out which features matter. Random forests earn their place partly because feature importance "
   "falls out of them; Gaussian regression suits small datasets with useful uncertainty estimates; "
   "active learning fits the design–build–test–learn loop that automated synthesis makes possible.")}
-  {f2}
 </section>
 <section>
   <div class="prose"><h2>A model only sees the descriptors you chose</h2></div>
@@ -1636,7 +1541,7 @@ def deep_body(slug):
 </section>'''
 
     if slug == "saxs-machine-learning":
-        fg, fk, fp, fd, ft, fm, model = PR.saxs_figures()
+        fo, ft, fm, model = PR.saxs_figures()
         tiles = "".join(f'<div class="tile"><span class="tile__v">{v}</span>'
                         f'<span class="tile__k">{k}<br>{s}</span></div>' for k, v, s in model)
         return f'''
@@ -1648,18 +1553,7 @@ def deep_body(slug):
   "An experienced person handles this well, at a rate of a few profiles an hour, and two experienced "
   "people will not produce identical numbers. Once a high-throughput campaign is generating hundreds "
   "of profiles, both facts become blocking.")}
-  {fd}
-</section>
-<section>
-  <div class="prose"><h2>Three views of one measurement</h2>
-  <p>The figures below are computed rather than measured. Each is generated from the geometry of a
-  model body by Monte-Carlo sampling its pair distance distribution and transforming that to a
-  scattering profile by the Debye relation. Because R<sub>g</sub> and D<sub>max</sub> come from the
-  same distribution as the curves, the three plots agree with one another the way a real measurement
-  does, and the recovered R<sub>g</sub> can be checked against the exact analytical value.</p></div>
-  {fg}
-  {fk}
-  {fp}
+  {fo}
 </section>
 <section>
   <div class="prose"><h2>Where the model comes in</h2>
@@ -1687,7 +1581,7 @@ def deep_body(slug):
   <p><a href="../notes/trusting-a-saxs-analysis-you-did-not-do-by-hand.html">More on this in the research notes.</a></p></div>
 </section>'''
 
-    f1, f2 = PR.enzyme_figures()
+    (f_flow,) = PR.enzyme_figures()
     return f'''
 <section>{deep_prose(
   "Enzymes are extraordinary catalysts in water and frequently useless outside it. Move one into a "
@@ -1698,12 +1592,12 @@ def deep_body(slug):
   "composition and whether the enzyme survives is not obvious from first principles.")}
 </section>
 <section>
-  <div class="prose"><h2>The space is too big to reason about</h2></div>
-  {f1}
-</section>
-<section>
-  <div class="prose"><h2>How the screen runs</h2></div>
-  {f2}
+  <div class="prose"><h2>How the screen runs</h2>
+  <p>Six monomers combined three at a time, in composition steps, at a handful of chain lengths is
+  already more distinct polymers than anyone screens by hand, and the real space does not come in
+  tidy steps. That is the reason the search runs in parallel rather than one rational design at a
+  time.</p></div>
+  {f_flow}
   <div class="prose">
   <p>Two things make this work as a dataset rather than a set of experiments. Every well is measured
   the same way, and the wells that fail are kept. A polymer that leaves the enzyme insoluble produces
